@@ -1,0 +1,17 @@
+[
+  {
+    "message": "Hello from server!"
+  },
+  {
+    "name": "Jeremy Zanna",
+    "password": "12345"
+  },
+  {
+    "name": "Alon Silberstein",
+    "password": "00000"
+  },
+  {
+    "name": "Nathan Adda",
+    "password": "11111"
+  }
+]
