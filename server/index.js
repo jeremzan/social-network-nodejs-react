@@ -60,23 +60,39 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  console.log(req.body);
   readFile(path, (err, data) => {
     if (err) {
       console.log("File read failed:", err);
       return;
     }
+
     const parsedData = JSON.parse(data);
-    const newId = parsedData[parsedData.length - 1].id + 1;
-    const newUser = req.body;
-    newUser.id = newId;
-    parsedData.push(newUser);
-    writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
-      if (err) {
-        console.log("Failed to write updated data to file");
-        return;
+    let isVaildEmail = true
+    parsedData.forEach(element => {
+      if (element.email === req.body.email) {
+        isVaildEmail = false
       }
     });
+
+    if (isVaildEmail) {
+      const newId = parsedData[parsedData.length - 1].id + 1;
+      const newUser = req.body;
+      newUser.id = newId;
+      parsedData.push(newUser);
+
+      writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
+        if (err) {
+          console.log("Failed to write updated data to file");
+          return;
+        }
+      });
+    }
+    else {
+      res.json({
+        "exist": true
+      })
+
+    }
   });
 });
 

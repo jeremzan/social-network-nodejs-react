@@ -28,8 +28,9 @@ const Register = () => {
     };
     axios
       .post("/register", newUser)
-      .then((response) => console.log(response))
+      .then((response) => console.log(response.data))
       .catch((error) => console.error(error));
+
     naviguate("/login");
   };
 
