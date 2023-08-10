@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import Register from "./Register";
 import Login from "./Login";
+import ReadMe from "./ReadMe";
 
 // const baseUrl = {
 //   client: "http://localhost:3000",
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/login" element={<Login />}></Route>
+            <Route path={"/readme.html"} element={<ReadMe />}></Route>
           </Routes>
         </div>
       </div>
