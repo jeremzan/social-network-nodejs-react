@@ -67,14 +67,14 @@ app.post("/register", (req, res) => {
     }
 
     const parsedData = JSON.parse(data);
-    let isVaildEmail = true
-    parsedData.forEach(element => {
+    let isValidEmail = true;
+    parsedData.forEach((element) => {
       if (element.email === req.body.email) {
-        isVaildEmail = false
+        isValidEmail = false;
       }
     });
 
-    if (isVaildEmail) {
+    if (isValidEmail) {
       const newId = parsedData[parsedData.length - 1].id + 1;
       const newUser = req.body;
       newUser.id = newId;
@@ -86,12 +86,11 @@ app.post("/register", (req, res) => {
           return;
         }
       });
-    }
-    else {
-      res.json({
-        "exist": true
-      })
-
+      res.status(200);
+      res.end();
+    } else {
+      res.status(201);
+      res.end();
     }
   });
 });

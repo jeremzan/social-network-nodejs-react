@@ -25,14 +25,5 @@
     "password": "Arak123",
     "posts": [],
     "following": []
-  },
-  {
-    "id": 4,
-    "firstName": "Alon",
-    "lastName": "Zilbershtein",
-    "email": "alon123@gmail.com",
-    "password": "alon123",
-    "posts": [],
-    "following": []
   }
 ]

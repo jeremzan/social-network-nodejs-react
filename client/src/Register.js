@@ -12,7 +12,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const naviguate = useNavigate();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -28,10 +28,18 @@ const Register = () => {
     };
     axios
       .post("/register", newUser)
-      .then((response) => console.log(response.data))
-      .catch((error) => console.error(error));
-
-    naviguate("/login");
+      .then((response) => {
+        console.log(response);
+        if (response.status === 201) {
+          alert(
+            "Email already in use. Please try another email or go to login."
+          );
+        } else {
+          console.log("doesn't exist ");
+          navigate("/login");
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
