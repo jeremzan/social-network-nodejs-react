@@ -9,8 +9,10 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { Grid } from "@mui/material";
+import { Link } from "react-router-dom";
 
-const SignIn = () => {
+const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -35,7 +37,7 @@ const SignIn = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -68,12 +70,24 @@ const SignIn = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Login
           </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link to="/" variant="body2">
+                {"Back to homepage"}
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link to="/register" variant="body2">
+                {"Don't have an account? Register!"}
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>
   );
 };
 
-export default SignIn;
+export default Login;

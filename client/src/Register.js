@@ -8,15 +8,29 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 
-const SignUp = () => {
+const Register = () => {
+  const naviguate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const newUser = {
+      id: -1,
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
       email: data.get("email"),
       password: data.get("password"),
-    });
+      posts: [],
+      following: [],
+    };
+    axios
+      .post("/register", newUser)
+      .then((response) => console.log(response))
+      .catch((error) => console.error(error));
+    naviguate("/login");
   };
 
   return (
@@ -34,7 +48,7 @@ const SignUp = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Register
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -87,11 +101,18 @@ const SignUp = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Register
           </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link to="/" variant="body2">
+                {"Back to homepage"}
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Container>
   );
 };
-export default SignUp;
+export default Register;

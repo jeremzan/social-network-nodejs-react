@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const { readFile, writeFile } = require("fs");
+const { parse } = require("path");
 
 const PORT = process.env.PORT || 3001;
 
@@ -18,7 +19,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 
-const path = "./data/users.json"; //The path is relative to the root execution context of the node application
+const path = "./data/db.json"; //The path is relative to the root execution context of the node application
 // readFile(path, (err, data) => {
 //   if (err) {
 //     console.log("File read failed:", err);
@@ -58,7 +59,7 @@ app.get("/api", (req, res) => {
   });
 });
 
-app.post("/api", (req, res) => {
+app.post("/register", (req, res) => {
   console.log(req.body);
   readFile(path, (err, data) => {
     if (err) {
@@ -66,7 +67,10 @@ app.post("/api", (req, res) => {
       return;
     }
     const parsedData = JSON.parse(data);
-    parsedData.push(req.body);
+    const newId = parsedData[parsedData.length - 1].id + 1;
+    const newUser = req.body;
+    newUser.id = newId;
+    parsedData.push(newUser);
     writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
       if (err) {
         console.log("Failed to write updated data to file");

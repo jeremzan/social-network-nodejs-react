@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "firstName": "Jeremy",
+    "lastName": "Zanna",
+    "email": "zanna.jeremy@gmail.com",
+    "password": "12345",
+    "posts": [],
+    "following": []
+  },
+  {
+    "id": 2,
+    "firstName": "Alon",
+    "lastName": "Silberstein",
+    "email": "alonzilberr@gmail.com",
+    "password": "11111",
+    "posts": [],
+    "following": []
+  },
+  {
+    "id": 3,
+    "firstName": "Dudu",
+    "lastName": "Faruk",
+    "email": "dudu123@gmail.com",
+    "password": "Arak123",
+    "posts": [],
+    "following": []
+  }
+]

@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import axios from "axios";
 import Home from "./Home";
-import SignUp from "./SignUp";
-import SignIn from "./SigIn";
+import Register from "./Register";
+import Login from "./Login";
 
 // const baseUrl = {
 //   client: "http://localhost:3000",
@@ -17,8 +15,8 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />}></Route>
-            <Route path="/signUp" element={<SignUp />}></Route>
-            <Route path="/signIn" element={<SignIn />}></Route>
+            <Route path="/register" element={<Register />}></Route>
+            <Route path="/login" element={<Login />}></Route>
           </Routes>
         </div>
       </div>
