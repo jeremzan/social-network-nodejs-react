@@ -12,9 +12,17 @@ import Container from "@mui/material/Container";
 import { Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const isValidUser = (user) => {
+    const mailFormat =
+      /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+    const passwordFormat = /^\S+$/;
+    return passwordFormat.test(user.password) && mailFormat.test(user.email);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -25,6 +33,15 @@ const Login = () => {
     };
     if (loggedUser.email === "admin" && loggedUser.password === "admin") {
       navigate("/admin");
+    } else {
+      if (!isValidUser(loggedUser)) {
+        alert("User's login info is not valid.");
+      } else {
+        axios
+          .post("/login", loggedUser)
+          .then((response) => console.log(response))
+          .catch((error) => console.error(error));
+      }
     }
   };
 

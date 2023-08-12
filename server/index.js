@@ -20,33 +20,7 @@ const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
 
 const path = "./data/db.json"; //The path is relative to the root execution context of the node application
-// readFile(path, (err, data) => {
-//   if (err) {
-//     console.log("File read failed:", err);
-//     return;
-//   }
-//   const parsedData = JSON.parse(data);
-//   parsedData[0].password = "12345";
-//   console.log("File data:", parsedData);
 
-//   writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
-//     if (err) {
-//       console.log("Failed to write updated data to file");
-//       return;
-//     }
-//   });
-// });
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 app.get("/admin", (req, res) => {
   readFile(path, (err, data) => {
     if (err) {

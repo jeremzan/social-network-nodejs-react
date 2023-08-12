@@ -3,13 +3,8 @@ import Home from "./Home";
 import Register from "./Register";
 import Login from "./Login";
 import ReadMe from "./ReadMe";
-import UserInterface from "./UserInterface";
 import Admin from "./Admin";
-
-// const baseUrl = {
-//   client: "http://localhost:3000",
-//   server: "http://localhost:3001",
-// };
+import Dashboard from "./Dashboard";
 
 function App() {
   return (
@@ -22,7 +17,7 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
             <Route path="/admin" element={<Admin />}></Route>
             <Route path="/readme.html" element={<ReadMe />}></Route>
-            <Route path="/user_interface" element={<UserInterface />}></Route>
+            <Route path="/dashboard" element={<Dashboard />}></Route>
           </Routes>
         </div>
       </div>
@@ -31,21 +26,3 @@ function App() {
 }
 
 export default App;
-
-// const [data, setData] = useState(null);
-// useEffect(() => {
-//   axios
-//     .get(`/api`)
-//     .then((response) => setData(response.data[0].message))
-//     .catch((error) => console.error(error));
-// }, []);
-
-// const doPost = () => {
-//   axios
-//     .post(`/api`, {
-//       name: "Hanry Safdie",
-//       password: "66666",
-//     })
-//     .then((response) => console.log(response.data))
-//     .catch((error) => console.log(error));
-// };
