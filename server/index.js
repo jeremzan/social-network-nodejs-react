@@ -47,15 +47,34 @@ const path = "./data/db.json"; //The path is relative to the root execution cont
 //
 //
 //
-app.get("/api", (req, res) => {
+app.get("/admin", (req, res) => {
   readFile(path, (err, data) => {
     if (err) {
       console.log("File read failed:", err);
       return;
     }
     const parsedData = JSON.parse(data);
-    console.log(parsedData);
-    res.json(parsedData);
+    const users = parsedData.slice(1);
+    res.json(users);
+  });
+});
+
+app.delete("/admin/:id", (req, res) => {
+  const userId = req.params.id;
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data);
+    const newUsers = parsedData.filter((user) => user.id != userId);
+    writeFile(path, JSON.stringify(newUsers, null, 2), (err) => {
+      if (err) {
+        console.log("Failed to write updated data to file");
+        return;
+      }
+    });
+    res.json(newUsers.slice(1));
   });
 });
 

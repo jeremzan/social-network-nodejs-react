@@ -14,6 +14,19 @@ import { Link, useNavigate } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
 
+  const isValidForm = (newUser) => {
+    const nameFormat = /^[a-zA-Z]+$/;
+    const mailFormat =
+      /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+    const passwordFormat = /^\S+$/;
+    return (
+      nameFormat.test(newUser.firstName) &&
+      nameFormat.test(newUser.lastName) &&
+      passwordFormat.test(newUser.password) &&
+      mailFormat.test(newUser.email)
+    );
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -25,21 +38,28 @@ const Register = () => {
       password: data.get("password"),
       posts: [],
       following: [],
+      lastLogOut: null,
     };
-    axios
-      .post("/register", newUser)
-      .then((response) => {
-        console.log(response);
-        if (response.status === 201) {
-          alert(
-            "Email already in use. Please try another email or go to login."
-          );
-        } else {
-          console.log("doesn't exist ");
-          navigate("/login");
-        }
-      })
-      .catch((error) => console.log(error));
+    const isValid = isValidForm(newUser);
+    if (isValid) {
+      axios
+        .post("/register", newUser)
+        .then((response) => {
+          console.log(response);
+          if (response.status === 201) {
+            alert(
+              "Email already in use. Please try another email or go to login."
+            );
+          } else {
+            navigate("/login");
+          }
+        })
+        .catch((error) => console.log(error));
+    } else {
+      alert(
+        "One of the fields is invalid. Please do not put an empty first name or last name and check for a valid email."
+      );
+    }
   };
 
   return (
@@ -87,6 +107,7 @@ const Register = () => {
                 required
                 fullWidth
                 id="email"
+                type={"email"}
                 label="Email Address"
                 name="email"
                 autoComplete="email"

@@ -3,6 +3,8 @@ import Home from "./Home";
 import Register from "./Register";
 import Login from "./Login";
 import ReadMe from "./ReadMe";
+import UserInterface from "./UserInterface";
+import Admin from "./Admin";
 
 // const baseUrl = {
 //   client: "http://localhost:3000",
@@ -18,7 +20,9 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/login" element={<Login />}></Route>
-            <Route path={"/readme.html"} element={<ReadMe />}></Route>
+            <Route path="/admin" element={<Admin />}></Route>
+            <Route path="/readme.html" element={<ReadMe />}></Route>
+            <Route path="/user_interface" element={<UserInterface />}></Route>
           </Routes>
         </div>
       </div>

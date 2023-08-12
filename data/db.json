@@ -1,12 +1,18 @@
 [
   {
+    "id": 0,
+    "email": "admin",
+    "password": "admin"
+  },
+  {
     "id": 1,
     "firstName": "Jeremy",
     "lastName": "Zanna",
     "email": "zanna.jeremy@gmail.com",
     "password": "12345",
     "posts": [],
-    "following": []
+    "following": [],
+    "lastLogOut": null
   },
   {
     "id": 2,
@@ -15,7 +21,8 @@
     "email": "alonzilberr@gmail.com",
     "password": "11111",
     "posts": [],
-    "following": []
+    "following": [],
+    "lastLogOut": null
   },
   {
     "id": 3,
@@ -24,6 +31,7 @@
     "email": "dudu123@gmail.com",
     "password": "Arak123",
     "posts": [],
-    "following": []
+    "following": [],
+    "lastLogOut": null
   }
 ]
