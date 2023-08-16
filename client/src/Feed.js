@@ -1,5 +1,9 @@
 const Feed = () => {
-  return <p>ALON </p>;
+  return (
+    <div className="feed">
+      <p>This is the feed</p>
+    </div>
+  );
 };
 
 export default Feed;

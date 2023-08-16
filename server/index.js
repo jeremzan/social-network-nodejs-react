@@ -88,6 +88,35 @@ app.post("/register", (req, res) => {
   });
 });
 
+app.post("/login", (req, res) => {
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+
+    let isValidUser = false;
+    let user = null;
+    const parsedData = JSON.parse(data);
+    parsedData.forEach((element) => {
+      if (
+        element.email === req.body.email &&
+        element.password === req.body.password
+      ) {
+        isValidUser = true;
+        user = element;
+      }
+    });
+    if (isValidUser) {
+      console.log(user);
+      res.json(user);
+    } else {
+      res.status(201);
+      res.end();
+    }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

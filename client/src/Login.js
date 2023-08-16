@@ -14,14 +14,17 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const Login = () => {
+const Login = ({ parentCallback }) => {
   const navigate = useNavigate();
 
   const isValidUser = (user) => {
     const mailFormat =
       /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
     const passwordFormat = /^\S+$/;
-    return passwordFormat.test(user.password) && mailFormat.test(user.email);
+    return (
+      (passwordFormat.test(user.password) && mailFormat.test(user.email)) ||
+      (user.email === "admin" && user.password === "admin")
+    );
   };
 
   const handleSubmit = (event) => {
@@ -31,17 +34,29 @@ const Login = () => {
       email: data.get("email"),
       password: data.get("password"),
     };
-    if (loggedUser.email === "admin" && loggedUser.password === "admin") {
-      navigate("/admin");
+
+    if (!isValidUser(loggedUser)) {
+      alert("User's login info is not valid.");
     } else {
-      if (!isValidUser(loggedUser)) {
-        alert("User's login info is not valid.");
-      } else {
-        axios
-          .post("/login", loggedUser)
-          .then((response) => console.log(response))
-          .catch((error) => console.error(error));
-      }
+      axios
+        .post("/login", loggedUser)
+        .then((response) => {
+          if (response.status === 201) {
+            alert(
+              "Password or email incorrect. If you didn't register please do so."
+            );
+          } else {
+            console.log(response.data);
+            parentCallback(response.data);
+
+            if (response.data.email === "admin") {
+              navigate("/admin");
+            } else {
+              navigate("/dashboard/feed");
+            }
+          }
+        })
+        .catch((error) => console.error(error));
     }
   };
 
@@ -114,3 +129,7 @@ const Login = () => {
 };
 
 export default Login;
+
+// if (loggedUser.email === "admin" && loggedUser.password === "admin") {
+//   navigate("/admin");
+// }

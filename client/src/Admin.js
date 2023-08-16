@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const Admin = () => {
+const Admin = ({ userInfo }) => {
+  const navigate = useNavigate();
   const [users, setUsers] = useState(null);
 
   const handleDelete = (id) => {
@@ -15,11 +17,21 @@ const Admin = () => {
   };
 
   useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    } else if (userInfo.email !== "admin") {
+      navigate("/dashboard/feed"); // We'll want always to redirect to dashboard/feed
+    }
+
     axios
       .get("/admin")
       .then((response) => setUsers(response.data))
       .catch((error) => console.error(error));
-  }, []);
+  }, [userInfo, navigate]);
+
+  if (!userInfo || userInfo.email !== "admin") {
+    return null;
+  }
   return (
     <div className="users">
       <h2>Users</h2>
