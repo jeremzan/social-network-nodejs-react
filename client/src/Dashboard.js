@@ -8,14 +8,12 @@ const Dashboard = ({ userInfo }) => {
   useEffect(() => {
     if (!userInfo) {
       navigate("/login");
-    } else if (userInfo.email !== "admin") {
-      navigate("/dashboard/feed"); // When wnating to access /dahboard/friends redirect to dashboard/feed
     } else if (userInfo.email === "admin") {
       navigate("/admin");
     }
   }, [userInfo, navigate]);
 
-  if (!userInfo) {
+  if (!userInfo || userInfo.email === "admin") {
     return null;
   }
   return (
@@ -32,3 +30,6 @@ const Dashboard = ({ userInfo }) => {
 export default Dashboard;
 
 // return <Link to="/login">{"Go back to Login Cabron !"} </Link>;
+// } else if (userInfo.email !== "admin") {
+//   navigate("/dashboard"); // When wnating to access /dahboard/friends redirect to dashboard/feed
+// }

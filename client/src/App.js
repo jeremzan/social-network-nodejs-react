@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Home from "./Home";
 import Register from "./Register";
 import Login from "./Login";
@@ -10,13 +15,34 @@ import Friends from "./Friends";
 import { useState } from "react";
 
 function App() {
-  const handleCallback = (childData) => {
+  const handleCallback = (childData, remember) => {
+    const now = new Date();
+    let ttl = 0;
+    remember ? (ttl = 864000000) : (ttl = 10000);
     setUserInfo(childData);
-    localStorage.setItem("userInfo", JSON.stringify(childData));
+    localStorage.setItem(
+      "userInfo",
+      JSON.stringify({ user: childData, expiry: now.getTime() + ttl })
+    );
   };
 
-  // When initializing the state in App component
-  const initialUserInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const getItemWithExpiry = () => {
+    const itemStr = localStorage.getItem("userInfo");
+
+    if (!itemStr) {
+      return null;
+    }
+    const item = JSON.parse(itemStr);
+    const now = new Date();
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem("userInfo");
+      return null;
+    }
+    return item.user;
+  };
+
+  const initialUserInfo = getItemWithExpiry();
   const [userInfo, setUserInfo] = useState(initialUserInfo);
 
   return (
@@ -24,11 +50,16 @@ function App() {
       <div className="App">
         <div className="content">
           <Routes>
-            <Route path="/" element={<Home />}></Route>
-            <Route path="/register" element={<Register />}></Route>
+            <Route path="/" element={<Home userInfo={userInfo} />}></Route>
+            <Route
+              path="/register"
+              element={<Register userInfo={userInfo} />}
+            ></Route>
             <Route
               path="/login"
-              element={<Login parentCallback={handleCallback} />}
+              element={
+                <Login parentCallback={handleCallback} userInfo={userInfo} />
+              }
             ></Route>
             <Route
               path="/admin"
@@ -40,8 +71,9 @@ function App() {
               path="/dashboard"
               element={<Dashboard userInfo={userInfo} />}
             >
-              <Route path="/dashboard/feed" element={<Feed />}></Route>
-              <Route path="/dashboard/friends" element={<Friends />}></Route>
+              <Route index element={<Navigate to="feed" />} />
+              <Route path="feed" element={<Feed />}></Route>
+              <Route path="friends" element={<Friends />}></Route>
             </Route>
           </Routes>
         </div>

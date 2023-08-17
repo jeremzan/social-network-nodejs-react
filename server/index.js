@@ -89,6 +89,7 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
+  console.log(req.body);
   readFile(path, (err, data) => {
     if (err) {
       console.log("File read failed:", err);
@@ -109,7 +110,7 @@ app.post("/login", (req, res) => {
     });
     if (isValidUser) {
       console.log(user);
-      res.json(user);
+      res.json({ user: user, checkbox: req.body.checkbox });
     } else {
       res.status(201);
       res.end();
