@@ -1,4 +1,4 @@
-const Friends = () => {
+const Friends = ({ userInfo }) => {
   return <p>Our Friends</p>;
 };
 

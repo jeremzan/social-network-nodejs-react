@@ -10,8 +10,28 @@
     "lastName": "Zanna",
     "email": "zanna.jeremy@gmail.com",
     "password": "12345",
-    "posts": [],
-    "following": [],
+    "posts": [
+      {
+        "postId": 2,
+        "userName": "Jeremy Zanna",
+        "title": "",
+        "likedBy": [],
+        "insertionTime": 7,
+        "content": "Mon deuxieme prenom est David."
+      },
+      {
+        "postId": 3,
+        "userName": "Jeremy Zanna",
+        "title": "",
+        "likedBy": [],
+        "insertionTime": 10,
+        "content": "Je m'appelle Jeremy"
+      }
+    ],
+    "following": [
+      2,
+      3
+    ],
     "lastLogOut": null
   },
   {
@@ -20,7 +40,16 @@
     "lastName": "Silberstein",
     "email": "alonzilberr@gmail.com",
     "password": "11111",
-    "posts": [],
+    "posts": [
+      {
+        "postId": 0,
+        "userName": "Alon Silberstein",
+        "title": "",
+        "likedBy": [],
+        "insertionTime": 0,
+        "content": "Ani Alon YA bonjour"
+      }
+    ],
     "following": [],
     "lastLogOut": null
   },
@@ -30,6 +59,25 @@
     "lastName": "Faruk",
     "email": "dudu123@gmail.com",
     "password": "Arak123",
+    "posts": [
+      {
+        "postId": 1,
+        "userName": "Dudu Faruk",
+        "title": "",
+        "likedBy": [],
+        "insertionTime": 5,
+        "content": "Ani ohev arak"
+      }
+    ],
+    "following": [],
+    "lastLogOut": null
+  },
+  {
+    "id": 4,
+    "firstName": "Ilan",
+    "lastName": "Balouka",
+    "email": "fullstack@gmail.com",
+    "password": "1234",
     "posts": [],
     "following": [],
     "lastLogOut": null

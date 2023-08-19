@@ -19,9 +19,8 @@ const Dashboard = ({ userInfo }) => {
   return (
     <div className="dashboard">
       <Navbar />
-      <p>{JSON.stringify(userInfo)}</p>
       <div className="content">
-        <Outlet userInfo={userInfo} />
+        <Outlet />
       </div>
     </div>
   );

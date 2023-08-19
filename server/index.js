@@ -118,6 +118,69 @@ app.post("/login", (req, res) => {
   });
 });
 
+app.get("/feed/:id", (req, res) => {
+  const userId = req.params.id;
+  let posts = [];
+  let friendsId = [];
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data);
+    friendsId = parsedData.filter((user) => user.id == userId)[0].following;
+    friendsId.push(parseInt(userId));
+    console.log(friendsId);
+
+    parsedData.forEach((element) => {
+      if (friendsId.includes(element.id)) {
+        posts = posts.concat(element.posts);
+      }
+    });
+    posts.sort(function (a, b) {
+      return a.insertionTime - b.insertionTime;
+    });
+
+    console.log(posts);
+    res.json({ posts: posts });
+  });
+});
+
+app.post("/feed/liked", (req, res) => {
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data);
+
+    const userId = req.body.userId;
+    const postId = req.body.postId;
+
+    parsedData.forEach((element) => {
+      if (element.posts) {
+        element.posts.forEach((post) => {
+          if (post.postId === postId) {
+            if (post.likedBy.includes(userId)) {
+              post.likedBy = post.likedBy.filter((id) => id !== userId);
+            } else {
+              post.likedBy.push(req.body.userId);
+            }
+          }
+        });
+      }
+    });
+
+    writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
+      if (err) {
+        console.log("Failed to write updated data to file");
+        return;
+      }
+    });
+    res.end();
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

@@ -12,7 +12,7 @@ import Admin from "./Admin";
 import Dashboard from "./Dashboard";
 import Feed from "./Feed";
 import Friends from "./Friends";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const handleCallback = (childData, remember) => {
@@ -44,7 +44,6 @@ function App() {
 
   const initialUserInfo = getItemWithExpiry();
   const [userInfo, setUserInfo] = useState(initialUserInfo);
-
   return (
     <Router>
       <div className="App">
@@ -72,8 +71,11 @@ function App() {
               element={<Dashboard userInfo={userInfo} />}
             >
               <Route index element={<Navigate to="feed" />} />
-              <Route path="feed" element={<Feed />}></Route>
-              <Route path="friends" element={<Friends />}></Route>
+              <Route path="feed" element={<Feed userInfo={userInfo} />}></Route>
+              <Route
+                path="friends"
+                element={<Friends userInfo={userInfo} />}
+              ></Route>
             </Route>
           </Routes>
         </div>
