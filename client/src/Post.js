@@ -36,6 +36,10 @@ const Post = ({ postInfo, userId }) => {
     setLiked(likedByCurrentUser);
   }, []);
 
+  const myDate = new Date(postInfo.insertionTime);
+  const formattedDate = `${myDate.toLocaleDateString(
+    "en-GB"
+  )}  ${myDate.getHours()}:${myDate.getMinutes().toString().padStart(2, "0")}`;
   return (
     <div
       style={{
@@ -52,7 +56,7 @@ const Post = ({ postInfo, userId }) => {
             </Avatar>
           }
           title={postInfo.title}
-          subheader={postInfo.insertionTime}
+          subheader={formattedDate}
         />
         <CardContent>
           <Typography

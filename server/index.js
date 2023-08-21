@@ -181,6 +181,67 @@ app.post("/feed/liked", (req, res) => {
   });
 });
 
+const generateNewPostId = (data) => {
+  let globalPostCounter = 0;
+  data.forEach((user) => {
+    if (user.posts) {
+      user.posts.forEach((post) => {
+        const postIdNumber = parseInt(post.postId);
+        console.log({
+          currentId: postIdNumber,
+          globalPostCounter: globalPostCounter,
+        });
+        if (postIdNumber > globalPostCounter) {
+          globalPostCounter = postIdNumber;
+        }
+      });
+    }
+  });
+  globalPostCounter++;
+  return globalPostCounter;
+};
+
+const createNewPost = (body, data) => {
+  const id = generateNewPostId(data);
+  console.log(id);
+  const newPost = {
+    postId: id,
+    userName: body.userName,
+    title: body.title,
+    likedBy: [],
+    insertionTime: body.insertionTime,
+    content: body.content,
+  };
+  return newPost;
+};
+
+app.post("/feed/newpost", (req, res) => {
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data);
+    const newPost = createNewPost(req.body, parsedData);
+
+    parsedData.forEach((user) => {
+      if (user.posts) {
+        if (user.id === req.body.userId) {
+          user.posts.push(newPost);
+        }
+      }
+    });
+
+    writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
+      if (err) {
+        console.log("Failed to write updated data to file");
+        return;
+      }
+    });
+    res.end();
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

@@ -17,8 +17,7 @@ const Feed = ({ userInfo }) => {
 
   return (
     <div className="feed">
-      <p>This is the feed</p>
-      <MyPost></MyPost>
+      <MyPost userInfo={userInfo} />
       {posts.map((post, index) => (
         <Post key={index} postInfo={post} userId={userInfo.id} />
       ))}

@@ -12,26 +12,23 @@
     "password": "12345",
     "posts": [
       {
-        "postId": 2,
+        "postId": 4,
         "userName": "Jeremy Zanna",
-        "title": "",
+        "title": "Test for post ",
         "likedBy": [],
-        "insertionTime": 7,
-        "content": "Mon deuxieme prenom est David."
+        "insertionTime": "2023-08-21T09:26:21.696Z",
+        "content": "My new post is that !"
       },
       {
-        "postId": 3,
+        "postId": 5,
         "userName": "Jeremy Zanna",
-        "title": "",
+        "title": "Second post for date test",
         "likedBy": [],
-        "insertionTime": 10,
-        "content": "Je m'appelle Jeremy"
+        "insertionTime": "2023-08-21T09:37:22.309Z",
+        "content": "Let's see the banana of Yossi"
       }
     ],
-    "following": [
-      2,
-      3
-    ],
+    "following": [2, 3],
     "lastLogOut": null
   },
   {
@@ -40,16 +37,7 @@
     "lastName": "Silberstein",
     "email": "alonzilberr@gmail.com",
     "password": "11111",
-    "posts": [
-      {
-        "postId": 0,
-        "userName": "Alon Silberstein",
-        "title": "",
-        "likedBy": [],
-        "insertionTime": 0,
-        "content": "Ani Alon YA bonjour"
-      }
-    ],
+    "posts": [],
     "following": [],
     "lastLogOut": null
   },
@@ -59,16 +47,7 @@
     "lastName": "Faruk",
     "email": "dudu123@gmail.com",
     "password": "Arak123",
-    "posts": [
-      {
-        "postId": 1,
-        "userName": "Dudu Faruk",
-        "title": "",
-        "likedBy": [],
-        "insertionTime": 5,
-        "content": "Ani ohev arak"
-      }
-    ],
+    "posts": [],
     "following": [],
     "lastLogOut": null
   },

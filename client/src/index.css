@@ -11,3 +11,8 @@
     #2b86c5 100%
   );
 }
+
+body {
+  margin: 0;
+  padding: 0;
+}
