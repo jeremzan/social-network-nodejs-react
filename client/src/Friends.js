@@ -12,24 +12,29 @@ import { useNavigate } from "react-router-dom";
 import FriendCard from "./FriendCard";
 
 const Friends = ({ userInfo }) => {
-  const navigate = useNavigate();
-  const [name, setName] = useState("");
+  // const navigate = useNavigate();
   const [friends, setFriends] = useState([]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!name.trim()) {
+    const data = new FormData(event.currentTarget);
+    const userName = data.get("username").trim();
+
+    if (!userName) {
       alert("You need to enter a name !");
       return;
     }
-    const data = new FormData(event.currentTarget);
-    const userName = data.get("username");
+
+    if (/\s{2,}/.test(userName)) {
+      alert("Please enter a valid name without consecutive spaces!");
+      return;
+    }
+
     axios
       .get(`/friends/${userName}`)
       .then((response) => {
         console.log(response);
-        setName("");
         setFriends(response.data);
       })
       .catch((error) => console.error(error));
@@ -67,8 +72,13 @@ const Friends = ({ userInfo }) => {
             <Typography component="h1" variant="h5">
               Search friends
             </Typography>
-            {/* onSubmit={handleSubmit} */}
-            <Box component="form" noValidate sx={{ mt: 1 }}>
+
+            <Box
+              onSubmit={handleSubmit}
+              component="form"
+              noValidate
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required

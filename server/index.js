@@ -140,7 +140,7 @@ app.get("/feed/:id", (req, res) => {
     posts.sort(function (a, b) {
       return a.insertionTime - b.insertionTime;
     });
-
+    posts.reverse();
     console.log(posts);
     res.json({ posts: posts });
   });
@@ -239,6 +239,34 @@ app.post("/feed/newpost", (req, res) => {
       }
     });
     res.end();
+  });
+});
+
+function searchByNamePrefix(searchTerm, newFormattedUsers) {
+  const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  return newFormattedUsers.filter((user) =>
+    user.username.toLowerCase().startsWith(lowerCaseSearchTerm)
+  );
+}
+
+app.get("/friends/:username", (req, res) => {
+  console.log(req.params.username);
+  const nameToSearch = req.params.username;
+
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data).slice(1);
+    const newFormattedUsers = parsedData.map((user) => ({
+      username: `${user.firstName} ${user.lastName}`,
+      id: user.id,
+    }));
+
+    const searchResult = searchByNamePrefix(nameToSearch, newFormattedUsers);
+
+    res.json(searchResult);
   });
 });
 
