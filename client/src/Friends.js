@@ -19,20 +19,25 @@ const Friends = ({ userInfo }) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
-    const userName = data.get("username").trim();
+    const friendUserName = data.get("username").trim();
 
-    if (!userName) {
+    if (!friendUserName) {
       alert("You need to enter a name !");
       return;
     }
 
-    if (/\s{2,}/.test(userName)) {
+    if (/\s{2,}/.test(friendUserName)) {
       alert("Please enter a valid name without consecutive spaces!");
       return;
     }
 
     axios
-      .get(`/friends/${userName}`)
+      .get(`/friends/`, {
+        params: {
+          friendusername: friendUserName,
+          userid: userInfo.id
+        }
+      })
       .then((response) => {
         console.log(response);
         setFriends(response.data);

@@ -242,16 +242,16 @@ app.post("/feed/newpost", (req, res) => {
   });
 });
 
-function searchByNamePrefix(searchTerm, newFormattedUsers) {
+function searchByNamePrefix(searchTerm, newFormattedUsers, userID) {
   const lowerCaseSearchTerm = searchTerm.toLowerCase();
   return newFormattedUsers.filter((user) =>
-    user.username.toLowerCase().startsWith(lowerCaseSearchTerm)
+    user.username.toLowerCase().startsWith(lowerCaseSearchTerm) && user.id != userID
   );
 }
 
-app.get("/friends/:username", (req, res) => {
-  console.log(req.params.username);
-  const nameToSearch = req.params.username;
+app.get("/friends", (req, res) => {
+  const nameToSearch = req.query.friendusername;
+  const userID = req.query.userid;
 
   readFile(path, (err, data) => {
     if (err) {
@@ -264,10 +264,62 @@ app.get("/friends/:username", (req, res) => {
       id: user.id,
     }));
 
-    const searchResult = searchByNamePrefix(nameToSearch, newFormattedUsers);
-
+    const searchResult = searchByNamePrefix(nameToSearch, newFormattedUsers, userID);
     res.json(searchResult);
   });
+});
+
+app.get("/friends/display/:id", (req, res) => {
+  const id = req.params.id
+  let followingToReturn = []
+
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data);
+
+    parsedData.forEach(user => {
+      if (user.id == id) {
+        followingToReturn = user.following
+      }
+    });
+    res.json(followingToReturn);
+  });
+
+})
+
+app.post("/friends/follow", (req, res) => {
+  const userId = req.body.userId
+  const friendId = req.body.friendId
+
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data);
+
+    parsedData.forEach((user) => {
+      if (user.id === userId) {
+        if (user.following.includes(friendId)) {
+          user.following = user.following.filter((id) => id !== friendId);
+        } else {
+          user.following.push(friendId);
+        }
+      }
+    });
+
+    writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
+      if (err) {
+        console.log("Failed to write updated data to file");
+        return;
+      }
+    });
+    res.end();
+  });
+
 });
 
 app.listen(PORT, () => {

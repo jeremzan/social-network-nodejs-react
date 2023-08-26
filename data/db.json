@@ -31,12 +31,17 @@
         "postId": 6,
         "userName": "Jeremy Zanna",
         "title": "Pour ethan",
-        "likedBy": [1],
+        "likedBy": [
+          1
+        ],
         "insertionTime": "2023-08-21T13:09:45.725Z",
         "content": "Ethan c'est un gitan des bois !"
       }
     ],
-    "following": [2, 3],
+    "following": [
+      2,
+      3
+    ],
     "lastLogOut": null
   },
   {
@@ -45,7 +50,16 @@
     "lastName": "Silberstein",
     "email": "alonzilberr@gmail.com",
     "password": "11111",
-    "posts": [],
+    "posts": [
+      {
+        "postId": 7,
+        "userName": "Alon Silberstein",
+        "title": "Hi",
+        "likedBy": [],
+        "insertionTime": "2023-08-26T14:03:10.134Z",
+        "content": "How are you"
+      }
+    ],
     "following": [],
     "lastLogOut": null
   },

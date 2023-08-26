@@ -11,8 +11,25 @@ import { styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import axios from "axios";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const FriendCard = ({ friend, userInfo }) => {
+
+  const [isFollowing, setIsFollowing] = useState(false)
+
+  useEffect(() => {
+    axios
+      .get(`/friends/display/${userInfo.id}`)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.includes(friend.id)) {
+          setIsFollowing(true)
+        }
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   const nameInitials = (userName) => {
     const splittedName = userName.split(" ");
     const firstInitial = splittedName[0].charAt(0).toUpperCase();
@@ -20,6 +37,14 @@ const FriendCard = ({ friend, userInfo }) => {
     const initials = firstInitial + "" + secondtInitial;
     return initials;
   };
+
+  const handleFollowToggle = () => {
+    axios
+      .post("/friends/follow", { userId: userInfo.id, friendId: friend.id })
+      .then((response) => console.log(response))
+      .catch((error) => console.error(error));
+  };
+
 
   const FollowingSwitch = styled(Switch)(({ theme }) => ({
     padding: 8,
@@ -66,19 +91,29 @@ const FriendCard = ({ friend, userInfo }) => {
         <CardHeader
           avatar={
             <Avatar sx={{ bgcolor: red[500] }} aria-label="post-content">
-              {nameInitials(friend.userName)}
+              {nameInitials(friend.username)}
             </Avatar>
           }
-          title={friend.userName}
+          title={friend.username}
         />
-        <CardActions disableSpacing>
-          <FormControlLabel
-            control={<FollowingSwitch defaultChecked />}
-            label="Following"
-          />
+        <CardActions
+          disableSpacing
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            paddingRight: "16px",
+          }}
+        >
+          <div style={{ marginLeft: "auto" }}>
+            <FormControlLabel
+              onClick={handleFollowToggle}
+              control={<FollowingSwitch defaultChecked={isFollowing} />}
+              label="Following"
+            />
+          </div>
         </CardActions>
       </Card>
-      ;
     </div>
   );
 };
