@@ -134,23 +134,23 @@ const Admin = ({ userInfo }) => {
 
   return (
     <div className="admin" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <div className="logout" style={{ position: "absolute", top: 0, left: 0, padding: "16px" }} >
+      <div className="logout" style={{ position: "absolute", top: 0, left: 0, padding: "16px" }}>
         <LogOutButton />
       </div>
       <div className="users"
         style={{
           marginTop: "85px",
           marginBottom: "20px",
+          width: "100%", // Take up full width
+          maxWidth: "1000px", // Set maximum width
+          padding: "0 16px", // Add padding for responsiveness
+          boxSizing: "border-box", // Include padding in the width
         }}>
         <DataGrid
           rows={rows}
           columns={columns}
-          initialState={{
-            pagination: {
-              paginationModel: { page: 0, pageSize: 5 }
-            }
-          }}
-          pageSizeOptions={[5, 10]}
+          pageSize={5} // Show less rows on smaller screens
+          autoHeight // Automatically adjust height
         />
       </div>
       <div
@@ -159,9 +159,13 @@ const Admin = ({ userInfo }) => {
           display: "flex",
           justifyContent: "center",
           marginBottom: "20px",
+          width: "100%", // Take up full width
+          maxWidth: "500px", // Set maximum width
+          padding: "0 16px", // Add padding for responsiveness
+          boxSizing: "border-box", // Include padding in the width
         }}
       >
-        <Card sx={{ width: 500 }}>
+        <Card sx={{ width: "100%" }}>
           <CardHeader title="Features" />
           <CardActions
             disableSpacing

@@ -350,7 +350,9 @@ app.post("/logout", (req, res) => {
 
     parsedData.forEach((user) => {
       if (user.id === idToUpdate) {
-        user.lastLogOut = new Date();
+        if (user.lastLogOut) {
+          user.lastLogOut = new Date();
+        }
       }
     });
 
