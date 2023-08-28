@@ -6,13 +6,15 @@ import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
+import { blue } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ReplyIcon from "@mui/icons-material/Reply";
 import axios from "axios";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import { useNavigate } from "react-router-dom";
 
 const Post = ({ postInfo, userId }) => {
+  const navigate = useNavigate();
   const nameInitials = (userName) => {
     const splittedName = userName.split(" ");
     const firstInitial = splittedName[0].charAt(0).toUpperCase();
@@ -31,15 +33,27 @@ const Post = ({ postInfo, userId }) => {
     setLiked((prevLiked) => !prevLiked);
   };
 
+  const handleDeletePost = () => {
+    axios
+      .delete(`/feed/delete/${postInfo.postId}`)
+      .then((response) => {
+        console.log(response)
+        navigate("/", { replace: true });
+      })
+      .catch((error) => console.error(error));
+  }
+
   React.useEffect(() => {
     const likedByCurrentUser = postInfo.likedBy.includes(userId);
     setLiked(likedByCurrentUser);
   }, []);
 
   const myDate = new Date(postInfo.insertionTime);
+
   const formattedDate = `${myDate.toLocaleDateString(
     "en-GB"
   )}  ${myDate.getHours()}:${myDate.getMinutes().toString().padStart(2, "0")}`;
+
   return (
     <div
       style={{
@@ -51,7 +65,7 @@ const Post = ({ postInfo, userId }) => {
       <Card sx={{ width: 500 }}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="post-content">
+            <Avatar sx={{ bgcolor: blue[700] }} aria-label="post-content">
               {nameInitials(postInfo.userName)}
             </Avatar>
           }
@@ -75,9 +89,18 @@ const Post = ({ postInfo, userId }) => {
           >
             {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </IconButton>
-          <IconButton aria-label="repost">
-            <ReplyIcon />
-          </IconButton>
+
+          {postInfo.userId == userId ?
+            <IconButton
+              onClick={handleDeletePost}
+              aria-label="delete"
+              sx={{
+                marginLeft: "auto",
+                color: "rgba(0, 0, 0, 0.54)",
+              }}
+            >
+              <DeleteOutlinedIcon />
+            </IconButton> : null}
         </CardActions>
       </Card>
     </div>

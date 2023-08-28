@@ -1,6 +1,7 @@
 import GradientBtn from "./GradientBtn";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Logo from "./Logo.png";
 
 const Home = ({ userInfo }) => {
   const navigate = useNavigate();
@@ -20,6 +21,8 @@ const Home = ({ userInfo }) => {
   } else {
     return (
       <div className="home" style={{ position: "relative", height: "100vh" }}>
+        {/* <img src={Logo} alt="Logo" style={{ width: "200px", marginBottom: "20px" }} /> */}
+
         <div
           className="buttons"
           style={{
@@ -41,7 +44,7 @@ const Home = ({ userInfo }) => {
             style={{ marginTop: "10px" }}
           ></GradientBtn>
         </div>
-        <h1
+        {/* <h1
           className="welcome"
           style={{
             fontFamily: "georgia",
@@ -55,7 +58,19 @@ const Home = ({ userInfo }) => {
           }}
         >
           Welcome to BET-A. Click to continue...
-        </h1>
+        </h1> */}
+        <img
+          src={Logo}
+          alt="Logo"
+          style={{
+            width: "500px", // Increased width for a bigger logo
+            marginBottom: "20px",
+            position: "absolute",
+            top: "40%", // Adjusted top position
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        />
       </div>
     );
   }

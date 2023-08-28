@@ -18,7 +18,7 @@ const Dashboard = ({ userInfo }) => {
   }
   return (
     <div className="dashboard">
-      <Navbar />
+      <Navbar userID={userInfo.id} />
       <div className="content">
         <Outlet />
       </div>

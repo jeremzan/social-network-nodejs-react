@@ -11,6 +11,7 @@ import Container from "@mui/material/Container";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { blue } from "@mui/material/colors";
 
 const Register = ({ userInfo }) => {
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ const Register = ({ userInfo }) => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: blue[700] }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">

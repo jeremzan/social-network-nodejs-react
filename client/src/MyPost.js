@@ -35,9 +35,6 @@ const MyPost = ({ userInfo }) => {
       .post("/feed/newpost", newPost)
       .then((response) => {
         console.log(response);
-        // setTitle("");
-        // setContent("");
-
         navigate("/", { replace: true }); // Navigate to the same route to trigger a refresh
       })
       .catch((error) => console.error(error));

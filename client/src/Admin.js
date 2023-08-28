@@ -43,7 +43,7 @@ const Admin = ({ userInfo }) => {
               <li>{user.lastName}</li>
               <li>{user.email}</li>
               <li>{user.lastLogOut}</li>
-              <li>{user.posts}</li>
+              {/* <li>{user.posts}</li> */}
             </ul>
             <button onClick={() => handleDelete(user.id)}>
               Delete from database

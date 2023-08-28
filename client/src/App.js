@@ -12,9 +12,14 @@ import Admin from "./Admin";
 import Dashboard from "./Dashboard";
 import Feed from "./Feed";
 import Friends from "./Friends";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
 
 function App() {
+
+  const [userInfo, setUserInfo] = useState(null);
+
   const handleCallback = (childData, remember) => {
     const now = new Date();
     let ttl = 0;
@@ -32,18 +37,30 @@ function App() {
     if (!itemStr) {
       return null;
     }
+
     const item = JSON.parse(itemStr);
     const now = new Date();
 
     if (now.getTime() > item.expiry) {
       localStorage.removeItem("userInfo");
+      if (item.user && item.user.id) {
+        axios
+          .post("/logout", { id: item.user.id })
+          .then((response) => console.log(response))
+          .catch((error) => console.error(error));
+      }
       return null;
     }
     return item.user;
   };
 
-  const initialUserInfo = getItemWithExpiry();
-  const [userInfo, setUserInfo] = useState(initialUserInfo);
+  useEffect(() => {
+    const initialUserInfo = getItemWithExpiry();
+    if (initialUserInfo) {
+      setUserInfo(initialUserInfo);
+    }
+  }, []);
+
   return (
     <Router>
       <div className="App">

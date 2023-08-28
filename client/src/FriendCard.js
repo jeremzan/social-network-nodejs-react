@@ -3,10 +3,7 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { blue } from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
@@ -90,7 +87,7 @@ const FriendCard = ({ friend, userInfo }) => {
       <Card sx={{ width: 500 }}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="post-content">
+            <Avatar sx={{ bgcolor: blue[700] }} aria-label="post-content">
               {nameInitials(friend.username)}
             </Avatar>
           }

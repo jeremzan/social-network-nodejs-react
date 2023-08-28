@@ -8,11 +8,9 @@ import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import FriendCard from "./FriendCard";
 
 const Friends = ({ userInfo }) => {
-  // const navigate = useNavigate();
   const [friends, setFriends] = useState([]);
 
   const handleSubmit = (event) => {

@@ -54,14 +54,34 @@
       {
         "postId": 7,
         "userName": "Alon Silberstein",
-        "title": "Hi",
+        "title": "Post from Alon",
         "likedBy": [],
-        "insertionTime": "2023-08-26T14:03:10.134Z",
-        "content": "How are you"
+        "insertionTime": "2023-08-28T08:33:32.389Z",
+        "content": "Banana"
+      },
+      {
+        "userId": 2,
+        "postId": 8,
+        "userName": "Alon Silberstein",
+        "title": "123",
+        "likedBy": [],
+        "insertionTime": "2023-08-28T08:54:38.459Z",
+        "content": "123"
+      },
+      {
+        "userId": 2,
+        "postId": 9,
+        "userName": "Alon Silberstein",
+        "title": "23123123123",
+        "likedBy": [],
+        "insertionTime": "2023-08-28T09:08:30.210Z",
+        "content": "123131231"
       }
     ],
-    "following": [],
-    "lastLogOut": null
+    "following": [
+      1
+    ],
+    "lastLogOut": "2023-08-28T08:33:16.486Z"
   },
   {
     "id": 3,

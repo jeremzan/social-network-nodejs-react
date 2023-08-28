@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import { blue } from "@mui/material/colors";
 
 const Login = ({ parentCallback, userInfo }) => {
   const navigate = useNavigate();
@@ -90,7 +91,7 @@ const Login = ({ parentCallback, userInfo }) => {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: blue[700] }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">

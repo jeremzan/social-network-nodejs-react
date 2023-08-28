@@ -6,17 +6,6 @@ const { parse } = require("path");
 
 const PORT = process.env.PORT || 3001;
 
-// const cors = require("cors");
-// const corsOptions = {
-//   origin: "*",
-//   credentials: true, //access-control-allow-credentials:true
-//   optionSuccessStatus: 200,
-// };
-// For the CORS errors but we used a proxy to fetch the data at the beginning
-// because couldn't resolve the CORS error for this specific first fetch
-// Otherwise it's needed for the post requests for example
-// app.use(cors());
-
 app.use(bodyParser.json());
 
 const path = "./data/db.json"; //The path is relative to the root execution context of the node application
@@ -181,6 +170,29 @@ app.post("/feed/liked", (req, res) => {
   });
 });
 
+app.delete("/feed/delete/:postid", (req, res) => {
+  const postId = req.params.postid;
+
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data);
+    parsedData.forEach(user => {
+      user.posts = user.posts.filter((post) => post.postId != postId);
+    });
+
+    writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
+      if (err) {
+        console.log("Failed to write updated data to file");
+        return;
+      }
+    });
+    res.end();
+  });
+});
+
 const generateNewPostId = (data) => {
   let globalPostCounter = 0;
   data.forEach((user) => {
@@ -205,6 +217,7 @@ const createNewPost = (body, data) => {
   const id = generateNewPostId(data);
   console.log(id);
   const newPost = {
+    userId: body.userId,
     postId: id,
     userName: body.userName,
     title: body.title,
@@ -321,6 +334,32 @@ app.post("/friends/follow", (req, res) => {
   });
 
 });
+
+app.post("/logout", (req, res) => {
+  const idToUpdate = req.body.id
+
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data);
+
+    parsedData.forEach((user) => {
+      if (user.id === idToUpdate) {
+        user.lastLogOut = new Date();
+      }
+    });
+
+    writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
+      if (err) {
+        console.log("Failed to write updated data to file");
+        return;
+      }
+    });
+    res.end();
+  });
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
