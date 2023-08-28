@@ -179,8 +179,11 @@ app.delete("/feed/delete/:postid", (req, res) => {
       return;
     }
     const parsedData = JSON.parse(data);
+
     parsedData.forEach(user => {
-      user.posts = user.posts.filter((post) => post.postId != postId);
+      if (user.posts) {
+        user.posts = user.posts.filter((post) => post.postId != postId);
+      }
     });
 
     writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {

@@ -2,7 +2,9 @@
   {
     "id": 0,
     "email": "admin",
-    "password": "admin"
+    "password": "admin",
+    "firstFeature": true,
+    "secondFeature": true
   },
   {
     "id": 1,
@@ -65,7 +67,7 @@
     "following": [
       1
     ],
-    "lastLogOut": "2023-08-28T12:02:32.364Z"
+    "lastLogOut": "2023-08-28T13:11:01.527Z"
   },
   {
     "id": 3,
