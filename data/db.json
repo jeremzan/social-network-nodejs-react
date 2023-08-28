@@ -12,37 +12,29 @@
     "password": "12345",
     "posts": [
       {
-        "postId": 4,
+        "userId": 1,
+        "postId": 1,
         "userName": "Jeremy Zanna",
-        "title": "Test for post ",
+        "title": "Post 1",
         "likedBy": [],
-        "insertionTime": "2023-08-21T09:26:21.696Z",
-        "content": "My new post is that !"
+        "insertionTime": "2023-08-28T12:05:16.688Z",
+        "content": "First post "
       },
       {
-        "postId": 5,
+        "userId": 1,
+        "postId": 2,
         "userName": "Jeremy Zanna",
-        "title": "Second post for date test",
+        "title": "Post 2 ",
         "likedBy": [],
-        "insertionTime": "2023-08-21T09:37:22.309Z",
-        "content": "Let's see the banana of Yossi"
-      },
-      {
-        "postId": 6,
-        "userName": "Jeremy Zanna",
-        "title": "Pour ethan",
-        "likedBy": [
-          1
-        ],
-        "insertionTime": "2023-08-21T13:09:45.725Z",
-        "content": "Ethan c'est un gitan des bois !"
+        "insertionTime": "2023-08-28T12:05:28.862Z",
+        "content": "My second post\n"
       }
     ],
     "following": [
       2,
       3
     ],
-    "lastLogOut": null
+    "lastLogOut": "2023-08-28T12:05:32.437Z"
   },
   {
     "id": 2,
@@ -52,36 +44,28 @@
     "password": "11111",
     "posts": [
       {
-        "postId": 7,
+        "userId": 2,
+        "postId": 3,
         "userName": "Alon Silberstein",
-        "title": "Post from Alon",
+        "title": "alon post 1",
         "likedBy": [],
-        "insertionTime": "2023-08-28T08:33:32.389Z",
-        "content": "Banana"
+        "insertionTime": "2023-08-28T12:06:08.462Z",
+        "content": "its' alon first post "
       },
       {
         "userId": 2,
-        "postId": 8,
+        "postId": 4,
         "userName": "Alon Silberstein",
-        "title": "123",
+        "title": "alon post 2",
         "likedBy": [],
-        "insertionTime": "2023-08-28T08:54:38.459Z",
-        "content": "123"
-      },
-      {
-        "userId": 2,
-        "postId": 9,
-        "userName": "Alon Silberstein",
-        "title": "23123123123",
-        "likedBy": [],
-        "insertionTime": "2023-08-28T09:08:30.210Z",
-        "content": "123131231"
+        "insertionTime": "2023-08-28T12:06:19.219Z",
+        "content": "it's alon second post"
       }
     ],
     "following": [
       1
     ],
-    "lastLogOut": "2023-08-28T08:33:16.486Z"
+    "lastLogOut": "2023-08-28T12:02:32.364Z"
   },
   {
     "id": 3,
