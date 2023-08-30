@@ -51,6 +51,13 @@ const Admin = ({ userInfo }) => {
   const [users, setUsers] = useState(null);
   const [rows, setRows] = useState([]);
 
+  const [features, setFeatures] = useState({
+    deleteFeature: true,
+    suffixFeature: true
+  }
+
+  )
+
   const handleDelete = (id) => {
     axios
       .delete(`/admin/${id}`)
@@ -68,6 +75,7 @@ const Admin = ({ userInfo }) => {
       navigate("/dashboard/feed"); // We'll want always to redirect to dashboard/feed
     }
 
+
     axios
       .get("/admin")
       .then((response) => {
@@ -82,10 +90,17 @@ const Admin = ({ userInfo }) => {
               "en-GB"
             )}  ${new Date(user.lastLogOut).getHours()}:${new Date(user.lastLogOut).getMinutes().toString().padStart(2, "0")}`
           }));
-
         setRows(initialRows);
       })
       .catch((error) => console.error(error));
+
+    axios
+      .get("/features")
+      .then((response) => {
+        setFeatures(response.data)
+      })
+      .catch((error) => console.error(error));
+
   }, [userInfo, navigate]);
 
   if (!userInfo || userInfo.email !== "admin") {
@@ -124,12 +139,18 @@ const Admin = ({ userInfo }) => {
     },
   ];
 
-  const handleFeatureOneToggle = () => {
-
+  const handleDeleteFeature = () => {
+    axios
+      .post("/updatefeatures", { id: 1 })
+      .then((response) => console.log(response))
+      .catch((error) => console.error(error));
   }
 
-  const handleFeatureTwoToggle = () => {
-
+  const handleSuffixFeature = () => {
+    axios
+      .post("/updatefeatures", { id: 2 })
+      .then((response) => console.log(response))
+      .catch((error) => console.error(error));
   }
 
   return (
@@ -178,13 +199,13 @@ const Admin = ({ userInfo }) => {
           >
             <div style={{ marginLeft: "auto" }}>
               <FormControlLabel
-                onClick={handleFeatureOneToggle}
-                control={<FollowingSwitch defaultChecked={false} />}
+                onClick={handleDeleteFeature}
+                control={<FollowingSwitch defaultChecked={features.deleteFeature} />}
                 label="Delete Post"
               />
               <FormControlLabel
-                onClick={handleFeatureTwoToggle}
-                control={<FollowingSwitch defaultChecked={false} />}
+                onClick={handleSuffixFeature}
+                control={<FollowingSwitch defaultChecked={features.suffixFeature} />}
                 label="Suffix Search"
               />
             </div>

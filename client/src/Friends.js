@@ -6,12 +6,14 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import FriendCard from "./FriendCard";
 
 const Friends = ({ userInfo }) => {
+
   const [friends, setFriends] = useState([]);
+  const [suffixFeature, setSuffixFeature] = useState(true)
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -33,7 +35,8 @@ const Friends = ({ userInfo }) => {
       .get(`/friends/`, {
         params: {
           friendusername: friendUserName,
-          userid: userInfo.id
+          userid: userInfo.id,
+          suffixFeature: suffixFeature
         }
       })
       .then((response) => {
@@ -42,6 +45,16 @@ const Friends = ({ userInfo }) => {
       })
       .catch((error) => console.error(error));
   };
+
+  useEffect(() => {
+    axios
+      .get("/features")
+      .then((response) => {
+        setSuffixFeature(response.data.suffixFeature)
+      })
+      .catch((error) => console.error(error));
+  })
+
 
   return (
     <div className="friends">

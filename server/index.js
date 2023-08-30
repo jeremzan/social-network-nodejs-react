@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const { readFile, writeFile } = require("fs");
 const { parse } = require("path");
+const { type } = require("os");
 
 const PORT = process.env.PORT || 3001;
 
@@ -78,7 +79,6 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  console.log(req.body);
   readFile(path, (err, data) => {
     if (err) {
       console.log("File read failed:", err);
@@ -98,7 +98,6 @@ app.post("/login", (req, res) => {
       }
     });
     if (isValidUser) {
-      console.log(user);
       res.json({ user: user, checkbox: req.body.checkbox });
     } else {
       res.status(201);
@@ -119,7 +118,6 @@ app.get("/feed/:id", (req, res) => {
     const parsedData = JSON.parse(data);
     friendsId = parsedData.filter((user) => user.id == userId)[0].following;
     friendsId.push(parseInt(userId));
-    console.log(friendsId);
 
     parsedData.forEach((element) => {
       if (friendsId.includes(element.id)) {
@@ -130,7 +128,6 @@ app.get("/feed/:id", (req, res) => {
       return a.insertionTime - b.insertionTime;
     });
     posts.reverse();
-    console.log(posts);
     res.json({ posts: posts });
   });
 });
@@ -202,10 +199,6 @@ const generateNewPostId = (data) => {
     if (user.posts) {
       user.posts.forEach((post) => {
         const postIdNumber = parseInt(post.postId);
-        console.log({
-          currentId: postIdNumber,
-          globalPostCounter: globalPostCounter,
-        });
         if (postIdNumber > globalPostCounter) {
           globalPostCounter = postIdNumber;
         }
@@ -218,7 +211,6 @@ const generateNewPostId = (data) => {
 
 const createNewPost = (body, data) => {
   const id = generateNewPostId(data);
-  console.log(id);
   const newPost = {
     userId: body.userId,
     postId: id,
@@ -265,9 +257,18 @@ function searchByNamePrefix(searchTerm, newFormattedUsers, userID) {
   );
 }
 
+function searchByNameSuffix(searchTerm, newFormattedUsers, userID) {
+  const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  return newFormattedUsers.filter((user) =>
+    user.username.toLowerCase().endsWith(lowerCaseSearchTerm) && user.id != userID
+  );
+}
+
 app.get("/friends", (req, res) => {
   const nameToSearch = req.query.friendusername;
   const userID = req.query.userid;
+  const suffixFeature = req.query.suffixFeature === 'true'
+
 
   readFile(path, (err, data) => {
     if (err) {
@@ -280,8 +281,17 @@ app.get("/friends", (req, res) => {
       id: user.id,
     }));
 
-    const searchResult = searchByNamePrefix(nameToSearch, newFormattedUsers, userID);
-    res.json(searchResult);
+    if (suffixFeature) {
+      const searchResult = searchByNameSuffix(nameToSearch, newFormattedUsers, userID);
+      res.json(searchResult);
+    }
+    else {
+      const searchResult = searchByNamePrefix(nameToSearch, newFormattedUsers, userID);
+      console.log(searchResult)
+      res.json(searchResult);
+    }
+    res.end();
+
   });
 });
 
@@ -366,6 +376,41 @@ app.post("/logout", (req, res) => {
   });
 })
 
+app.get("/features", (req, res) => {
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data)
+    const features = parsedData[0].features
+    res.json(features);
+  });
+})
+
+app.post("/updatefeatures", (req, res) => {
+  const id = req.body.id
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data)
+    if (id === 1) {
+      parsedData[0].features.deleteFeature = !parsedData[0].features.deleteFeature
+    } else {
+      parsedData[0].features.suffixFeature = !parsedData[0].features.suffixFeature
+    }
+    writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
+      if (err) {
+        console.log("Failed to write updated data to file");
+        return;
+      }
+    });
+    res.end();
+  });
+
+})
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

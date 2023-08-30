@@ -157,7 +157,3 @@ const Login = ({ parentCallback, userInfo }) => {
 };
 
 export default Login;
-
-// if (loggedUser.email === "admin" && loggedUser.password === "admin") {
-//   navigate("/admin");
-// }

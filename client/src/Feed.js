@@ -3,7 +3,7 @@ import axios from "axios";
 import Post from "./Post";
 import MyPost from "./MyPost";
 
-const Feed = ({ userInfo }) => {
+const Feed = ({ userInfo, deleteFeature }) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     axios
@@ -19,7 +19,7 @@ const Feed = ({ userInfo }) => {
     <div className="feed">
       <MyPost userInfo={userInfo} />
       {posts.map((post, index) => (
-        <Post key={index} postInfo={post} userId={userInfo.id} />
+        <Post key={index} postInfo={post} userId={userInfo.id} deleteFeature={deleteFeature} />
       ))}
     </div>
   );

@@ -12,6 +12,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import axios from "axios";
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Post = ({ postInfo, userId }) => {
   const navigate = useNavigate();
@@ -23,7 +24,12 @@ const Post = ({ postInfo, userId }) => {
     return initials;
   };
 
-  const [liked, setLiked] = React.useState(false);
+  const [liked, setLiked] = useState(false);
+
+  const [features, setFeatures] = useState({
+    deleteFeature: true,
+    suffixFeature: true
+  })
 
   const handleLikeClick = () => {
     axios
@@ -43,9 +49,15 @@ const Post = ({ postInfo, userId }) => {
       .catch((error) => console.error(error));
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     const likedByCurrentUser = postInfo.likedBy.includes(userId);
     setLiked(likedByCurrentUser);
+    axios
+      .get("/features")
+      .then((response) => {
+        setFeatures(response.data)
+      })
+      .catch((error) => console.error(error));
   }, []);
 
   const myDate = new Date(postInfo.insertionTime);
@@ -90,7 +102,7 @@ const Post = ({ postInfo, userId }) => {
             {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </IconButton>
 
-          {postInfo.userId == userId ?
+          {((postInfo.userId == userId) && features.deleteFeature) ?
             <IconButton
               onClick={handleDeletePost}
               aria-label="delete"
