@@ -24,7 +24,7 @@ function App() {
   const handleCallbackUser = (childData, remember) => {
     const now = new Date();
     let ttl = 0;
-    remember ? (ttl = 864000000) : (ttl = 10000);
+    remember ? (ttl = 864000000) : (ttl = 1800000);
     setUserInfo(childData);
     localStorage.setItem(
       "userInfo",
@@ -68,13 +68,27 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home userInfo={userInfo} />}></Route>
-            <Route path="/register" element={<Register userInfo={userInfo} />} />
-            <Route path="/login" element={<Login parentCallback={handleCallbackUser} userInfo={userInfo} />} />
+            <Route
+              path="/register"
+              element={<Register userInfo={userInfo} />}
+            />
+            <Route
+              path="/login"
+              element={
+                <Login
+                  parentCallback={handleCallbackUser}
+                  userInfo={userInfo}
+                />
+              }
+            />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/betoftheweek" element={<BetOfTheWeek />} />
             <Route path="/admin" element={<Admin userInfo={userInfo} />} />
             <Route path="/readme.html" element={<ReadMe />}></Route>
-            <Route path="/dashboard" element={<Dashboard userInfo={userInfo} />}>
+            <Route
+              path="/dashboard"
+              element={<Dashboard userInfo={userInfo} />}
+            >
               <Route index element={<Navigate to="feed" />} />
               <Route path="feed" element={<Feed userInfo={userInfo} />} />
               <Route path="friends" element={<Friends userInfo={userInfo} />} />
