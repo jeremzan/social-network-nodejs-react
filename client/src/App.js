@@ -24,7 +24,7 @@ function App() {
   const handleCallbackUser = (childData, remember) => {
     const now = new Date();
     let ttl = 0;
-    remember ? (ttl = 864000000) : (ttl = 1800000);
+    remember ? (ttl = 864000000) : (ttl = 10000);
     setUserInfo(childData);
     localStorage.setItem(
       "userInfo",

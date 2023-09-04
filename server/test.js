@@ -3,7 +3,6 @@ import assert from "assert";
 
 const BASE_URL = "http://localhost:3001";
 
-// Helper function to send HTTP requests and validate responses
 async function testRoute(route, method, data = {}) {
   const url = `${BASE_URL}${route}`;
   const options = { method };

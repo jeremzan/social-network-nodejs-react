@@ -16,37 +16,45 @@ const Friends = ({ userInfo }) => {
   const [suffixFeature, setSuffixFeature] = useState(true)
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    if (new Date().getTime() < JSON.parse(localStorage.getItem("userInfo")).expiry) {
+      event.preventDefault();
 
-    const data = new FormData(event.currentTarget);
-    const friendUserName = data.get("username").trim();
+      const data = new FormData(event.currentTarget);
+      const friendUserName = data.get("username").trim();
 
-    if (!friendUserName) {
-      alert("You need to enter a name !");
-      return;
+      if (!friendUserName) {
+        alert("You need to enter a name !");
+        return;
+      }
+
+      if (/\s{2,}/.test(friendUserName)) {
+        alert("Please enter a valid name without consecutive spaces!");
+        return;
+      }
+
+      axios
+        .get(`/friends/`, {
+          params: {
+            friendusername: friendUserName,
+            userid: userInfo.id,
+            suffixFeature: suffixFeature
+          }
+        })
+        .then((response) => {
+          console.log(response);
+          setFriends(response.data);
+        })
+        .catch((error) => console.error(error));
     }
-
-    if (/\s{2,}/.test(friendUserName)) {
-      alert("Please enter a valid name without consecutive spaces!");
-      return;
+    else {
+      window.location.reload(true)
     }
-
-    axios
-      .get(`/friends/`, {
-        params: {
-          friendusername: friendUserName,
-          userid: userInfo.id,
-          suffixFeature: suffixFeature
-        }
-      })
-      .then((response) => {
-        console.log(response);
-        setFriends(response.data);
-      })
-      .catch((error) => console.error(error));
-  };
+  }
 
   useEffect(() => {
+    if (new Date().getTime() > JSON.parse(localStorage.getItem("userInfo")).expiry) {
+      window.location.reload(true)
+    }
     axios
       .get("/features")
       .then((response) => {
@@ -89,8 +97,7 @@ const Friends = ({ userInfo }) => {
               Search friends
             </Typography>
 
-            <Box
-              onSubmit={handleSubmit}
+            <Box onSubmit={handleSubmit}
               component="form"
               noValidate
               sx={{ mt: 1 }}

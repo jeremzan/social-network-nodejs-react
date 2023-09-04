@@ -33,32 +33,38 @@ const Post = ({ postInfo, userId }) => {
   })
 
   const handleLikeClick = () => {
-    axios
-      .post("/feed/liked", { userId: userId, postId: postInfo.postId })
-      .then((response) => console.log(response))
-      .catch((error) => console.error(error));
-    setLiked((prevLiked) => !prevLiked);
+    if (new Date().getTime() < JSON.parse(localStorage.getItem("userInfo")).expiry) {
+      axios
+        .post("/feed/liked", { userId: userId, postId: postInfo.postId })
+        .then((response) => console.log(response))
+        .catch((error) => console.error(error));
+      setLiked((prevLiked) => !prevLiked);
+    } else {
+      window.location.reload(true);
+    }
   };
 
   const handleDeletePost = () => {
-    axios
-      .delete(`/feed/delete/${postInfo.postId}`)
-      .then((response) => {
-        console.log(response)
-        navigate("/", { replace: true });
-      })
-      .catch((error) => console.error(error));
+    if (new Date().getTime() < JSON.parse(localStorage.getItem("userInfo")).expiry) {
+      axios
+        .delete(`/feed/delete/${postInfo.postId}`)
+        .then((response) => { console.log(response) })
+        .catch((error) => console.error(error));
+    }
+    window.location.reload(true);
   }
 
   useEffect(() => {
     const likedByCurrentUser = postInfo.likedBy.includes(userId);
     setLiked(likedByCurrentUser);
-    axios
-      .get("/features")
-      .then((response) => {
-        setFeatures(response.data)
-      })
-      .catch((error) => console.error(error));
+    setTimeout(() => {
+      axios
+        .get("/features")
+        .then((response) => {
+          setFeatures(response.data)
+        })
+        .catch((error) => console.error(error));
+    }, 200)
   }, []);
 
   const myDate = new Date(postInfo.insertionTime);

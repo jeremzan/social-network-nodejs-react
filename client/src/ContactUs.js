@@ -14,28 +14,6 @@ import SendIcon from "@mui/icons-material/Send";
 import { Link } from "react-router-dom";
 
 const ContactUs = () => {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        content: "",
-    });
-    const [message, setMessage] = useState("");
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const { name } = formData;
-        const thankYouMessage = `Thank you, ${name}, we'll be in touch.`;
-        setMessage(thankYouMessage);
-    };
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
 
     return (
         <Container component="main" maxWidth="xs">
@@ -55,71 +33,53 @@ const ContactUs = () => {
                     Contact us
                 </Typography>
                 <Box
-                    sx={{
-                        mt: 2,
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                    }}
-                >
-                    {message && (
-                        <Typography variant="body1" color="textSecondary">
-                            {message}
-                        </Typography>
-                    )}
-                    {!message && (
-                        <Box
-                            component="form"
-                            noValidate
-                            sx={{ mt: 1 }}
-                            onSubmit={handleSubmit}
+                    sx={{ mt: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
+
+                    <Box
+                        component="form"
+                        noValidate
+                        sx={{ mt: 1 }}
+                    >
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="Name"
+                            name="name"
+                            autoComplete="name"
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="email"
+                            label="Email"
+                            type="email"
+                            id="email"
+                            autoComplete="email"
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            multiline
+                            rows={5}
+                            name="content"
+                            label="Your message"
+                            id="content"
+                            sx={{ width: "100%" }}
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
                         >
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="name"
-                                label="Name"
-                                name="name"
-                                autoComplete="name"
-                                value={formData.name}
-                                onChange={handleInputChange}
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="email"
-                                label="Email"
-                                type="email"
-                                id="email"
-                                autoComplete="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                            />
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                multiline
-                                rows={5}
-                                name="content"
-                                label="Your message"
-                                id="content"
-                                sx={{ width: "100%" }}
-                                value={formData.content}
-                                onChange={handleInputChange}
-                            />
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Send a message
-                            </Button>
-                        </Box>
-                    )}
+                            Send a message
+                        </Button>
+                    </Box>
+
                 </Box>
                 <Box
                     sx={{

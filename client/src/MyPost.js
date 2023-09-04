@@ -8,37 +8,37 @@ import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const MyPost = ({ userInfo }) => {
-  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    if (new Date().getTime() < JSON.parse(localStorage.getItem("userInfo")).expiry) {
+      event.preventDefault();
+      if (!title.trim() || !content.trim()) {
+        alert("Please write a title and put some content for your post !");
+        return;
+      }
+      const data = new FormData(event.currentTarget);
+      const newPost = {
+        userId: userInfo.id,
+        title: data.get("title"),
+        content: data.get("content"),
+        insertionTime: new Date(),
+        userName: userInfo.firstName + " " + userInfo.lastName,
+      };
 
-    if (!title.trim() || !content.trim()) {
-      alert("Please write a title and put some content for your post !");
-      return;
+      axios
+        .post("/feed/newpost", newPost)
+        .then((response) => {
+          console.log(response)
+          window.location.reload(true)
+        })
+        .catch((error) => console.error(error));
     }
-    const data = new FormData(event.currentTarget);
-    const newPost = {
-      userId: userInfo.id,
-      title: data.get("title"),
-      content: data.get("content"),
-      insertionTime: new Date(),
-      userName: userInfo.firstName + " " + userInfo.lastName,
-    };
-
-    axios
-      .post("/feed/newpost", newPost)
-      .then((response) => {
-        console.log(response);
-        navigate("/", { replace: true });
-      })
-      .catch((error) => console.error(error));
   };
+
 
   return (
     <Container

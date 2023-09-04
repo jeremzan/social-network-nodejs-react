@@ -6,14 +6,21 @@ import MyPost from "./MyPost";
 const Feed = ({ userInfo, deleteFeature }) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
-    axios
-      .get(`/feed/${userInfo.id}`)
-      .then((response) => {
-        console.log(response.data);
-        setPosts(response.data.posts);
-      })
-      .catch((error) => console.error(error));
+    if (new Date().getTime() > JSON.parse(localStorage.getItem("userInfo")).expiry) {
+      window.location.reload(true)
+    }
+    setTimeout(() => {
+      axios
+        .get(`/feed/${userInfo.id}`)
+        .then((response) => {
+          console.log(response.data);
+          setPosts(response.data.posts);
+        })
+        .catch((error) => console.error(error));
+    }, 200)
+
   }, []);
+
 
   return (
     <div className="feed">

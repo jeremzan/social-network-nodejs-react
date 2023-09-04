@@ -16,3 +16,37 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.readme-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align link to the top left */
+  padding: 20px;
+}
+
+.back-link {
+  margin-bottom: 20px; /* Add margin to separate the link from the content */
+  font-size: 18px; /* Adjust font size as needed */
+  text-decoration: none;
+  color: #0074d9; /* Change link color to your preference */
+}
+
+.readme-content {
+  width: 100%;
+  max-width: 600px; /* Adjust the max-width as needed */
+  text-align: left;
+  margin-right: auto; /* Push content to the right */
+  font-size: 20px;
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 768px) {
+  .readme-container {
+    align-items: center;
+  }
+  
+  .readme-content {
+    max-width: 100%;
+    margin: 0 auto; /* Center content on smaller screens */
+  }
+}

@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(bodyParser.json());
 
-const path = "./data/db.json"; //The path is relative to the root execution context of the node application
+const path = "./data/persist.js"; //The path is relative to the root execution context of the node application
 
 app.get("/admin", (req, res) => {
   readFile(path, (err, data) => {
