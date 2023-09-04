@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const Post = ({ postInfo, userId }) => {
+
   const navigate = useNavigate();
   const nameInitials = (userName) => {
     const splittedName = userName.split(" ");

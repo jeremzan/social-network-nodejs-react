@@ -1,5 +1,5 @@
-const fetch = require("node-fetch");
-const assert = require("assert");
+import fetch from "node-fetch";
+import assert from "assert";
 
 const BASE_URL = "http://localhost:3001";
 
@@ -22,10 +22,8 @@ async function testRoute(route, method, data = {}) {
   };
 }
 
-// Define your test cases for each route
 async function runTests() {
   try {
-    // Test the /admin route (GET)
     const adminTest = await testRoute("/admin", "GET");
     assert.strictEqual(
       adminTest.status,
@@ -34,7 +32,6 @@ async function runTests() {
     );
     console.log("Admin route test passed.");
 
-    // Test the /admin/:id route (DELETE)
     const deleteAdminTest = await testRoute("/admin/1", "DELETE");
     assert.strictEqual(
       deleteAdminTest.status,
@@ -43,11 +40,15 @@ async function runTests() {
     );
     console.log("Admin delete route test passed.");
 
-    // Test the /register route (POST)
     const registerTest = await testRoute("/register", "POST", {
       email: "newuser@example.com",
       password: "password123",
-      // Add other required fields here
+      id: -1,
+      firstName: "new",
+      lastName: "user",
+      posts: [],
+      following: [],
+      lastLogOut: null,
     });
     assert.strictEqual(
       registerTest.status,
@@ -56,9 +57,8 @@ async function runTests() {
     );
     console.log("Register route test passed.");
 
-    // Test the /login route (POST)
     const loginTest = await testRoute("/login", "POST", {
-      email: "test@example.com",
+      email: "newuser@example.com",
       password: "password123",
     });
     assert.strictEqual(
@@ -68,8 +68,7 @@ async function runTests() {
     );
     console.log("Login route test passed.");
 
-    // Test the /feed/:id route (GET)
-    const feedTest = await testRoute("/feed/1", "GET");
+    const feedTest = await testRoute("/feed/5", "GET");
     assert.strictEqual(
       feedTest.status,
       200,
@@ -77,7 +76,6 @@ async function runTests() {
     );
     console.log("Feed route test passed.");
 
-    // Test the /feed/liked route (POST)
     const likePostTest = await testRoute("/feed/liked", "POST", {
       userId: 1,
       postId: 1,
@@ -89,7 +87,6 @@ async function runTests() {
     );
     console.log("Like Post route test passed.");
 
-    // Test the /feed/delete/:postid route (DELETE)
     const deletePostTest = await testRoute("/feed/delete/1", "DELETE");
     assert.strictEqual(
       deletePostTest.status,
@@ -98,7 +95,6 @@ async function runTests() {
     );
     console.log("Delete Post route test passed.");
 
-    // Test the /feed/newpost route (POST)
     const newPostTest = await testRoute("/feed/newpost", "POST", {
       userId: 1,
       userName: "Test User",
@@ -113,7 +109,6 @@ async function runTests() {
     );
     console.log("New Post route test passed.");
 
-    // Test the /friends route (GET)
     const friendsTest = await testRoute(
       "/friends?friendusername=test&userid=1",
       "GET"
@@ -125,7 +120,6 @@ async function runTests() {
     );
     console.log("Friends route test passed.");
 
-    // Test the /friends/display/:id route (GET)
     const displayFriendsTest = await testRoute("/friends/display/1", "GET");
     assert.strictEqual(
       displayFriendsTest.status,
@@ -134,7 +128,6 @@ async function runTests() {
     );
     console.log("Display Friends route test passed.");
 
-    // Test the /friends/follow route (POST)
     const followFriendTest = await testRoute("/friends/follow", "POST", {
       userId: 1,
       friendId: 2,
@@ -146,7 +139,6 @@ async function runTests() {
     );
     console.log("Follow Friend route test passed.");
 
-    // Test the /logout route (POST)
     const logoutTest = await testRoute("/logout", "POST", {
       id: 1,
     });
@@ -157,7 +149,6 @@ async function runTests() {
     );
     console.log("Logout route test passed.");
 
-    // Test the /features route (GET)
     const featuresTest = await testRoute("/features", "GET");
     assert.strictEqual(
       featuresTest.status,
@@ -166,7 +157,6 @@ async function runTests() {
     );
     console.log("Features route test passed.");
 
-    // Test the /updatefeatures route (POST)
     const updateFeaturesTest = await testRoute("/updatefeatures", "POST", {
       id: 1,
     });

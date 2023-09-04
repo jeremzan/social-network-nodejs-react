@@ -1,9 +1,9 @@
-const express = require("express");
+import express from "express";
 const app = express();
-const bodyParser = require("body-parser");
-const { readFile, writeFile } = require("fs");
-const { parse } = require("path");
-const { type } = require("os");
+import bodyParser from "body-parser";
+import { readFile, writeFile } from "fs";
+import { parse } from "path";
+import { type } from "os";
 
 const PORT = process.env.PORT || 3001;
 
@@ -32,6 +32,12 @@ app.delete("/admin/:id", (req, res) => {
     }
     const parsedData = JSON.parse(data);
     const newUsers = parsedData.filter((user) => user.id != userId);
+    newUsers.forEach((user) => {
+      if (user.following) {
+        user.following = user.following.filter((followingUserId) => followingUserId != userId);
+      }
+    });
+
     writeFile(path, JSON.stringify(newUsers, null, 2), (err) => {
       if (err) {
         console.log("Failed to write updated data to file");
@@ -98,6 +104,7 @@ app.post("/login", (req, res) => {
       }
     });
     if (isValidUser) {
+      res.status(200);
       res.json({ user: user, checkbox: req.body.checkbox });
     } else {
       res.status(201);

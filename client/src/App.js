@@ -15,13 +15,11 @@ import Friends from "./Friends";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
+import ContactUs from "./ContactUs";
+import BetOfTheWeek from "./BetOfTheWeek";
 
 function App() {
   const [userInfo, setUserInfo] = useState(null);
-  // const [features, setFeatures] = useState({
-  //   deleteFeature: true,
-  //   suffixFeature: true,
-  // })
 
   const handleCallbackUser = (childData, remember) => {
     const now = new Date();
@@ -70,29 +68,13 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/" element={<Home userInfo={userInfo} />}></Route>
-            <Route
-              path="/register"
-              element={<Register userInfo={userInfo} />}
-            ></Route>
-            <Route
-              path="/login"
-              element={
-                <Login
-                  parentCallback={handleCallbackUser}
-                  userInfo={userInfo}
-                />
-              }
-            ></Route>
-            <Route
-              path="/admin"
-              element={<Admin userInfo={userInfo} />}
-            ></Route>
+            <Route path="/register" element={<Register userInfo={userInfo} />} />
+            <Route path="/login" element={<Login parentCallback={handleCallbackUser} userInfo={userInfo} />} />
+            <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/betoftheweek" element={<BetOfTheWeek />} />
+            <Route path="/admin" element={<Admin userInfo={userInfo} />} />
             <Route path="/readme.html" element={<ReadMe />}></Route>
-
-            <Route
-              path="/dashboard"
-              element={<Dashboard userInfo={userInfo} />}
-            >
+            <Route path="/dashboard" element={<Dashboard userInfo={userInfo} />}>
               <Route index element={<Navigate to="feed" />} />
               <Route path="feed" element={<Feed userInfo={userInfo} />} />
               <Route path="friends" element={<Friends userInfo={userInfo} />} />
@@ -105,9 +87,3 @@ function App() {
 }
 
 export default App;
-
-// const handleLogout = () => {
-//   setUserInfo(null);
-//   localStorage.removeItem('userInfo');
-//   // Any other logout-related logic
-// };

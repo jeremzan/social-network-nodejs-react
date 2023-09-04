@@ -72,7 +72,7 @@ const Admin = ({ userInfo }) => {
     if (!userInfo) {
       navigate("/login");
     } else if (userInfo.email !== "admin") {
-      navigate("/dashboard/feed"); // We'll want always to redirect to dashboard/feed
+      navigate("/dashboard/feed");
     }
 
 
