@@ -54,9 +54,11 @@ const Admin = ({ userInfo }) => {
   const [features, setFeatures] = useState({
     deleteFeature: true,
     suffixFeature: true
-  }
-
-  )
+  })
+  const [additionalPages, setAdditionalPages] = useState({
+    contactPage: true,
+    betsPage: true
+  })
 
   const handleDelete = (id) => {
     axios
@@ -101,6 +103,13 @@ const Admin = ({ userInfo }) => {
       })
       .catch((error) => console.error(error));
 
+    axios
+      .get("/pages")
+      .then((response) => {
+        setAdditionalPages(response.data)
+      })
+      .catch((error) => console.error(error));
+
   }, [userInfo, navigate]);
 
   if (!userInfo || userInfo.email !== "admin") {
@@ -117,7 +126,7 @@ const Admin = ({ userInfo }) => {
     { field: "firstName", headerName: "First name", width: 130 },
     { field: "lastName", headerName: "Last name", width: 130 },
     { field: "email", headerName: "Email", width: 170 },
-    { field: "activity", headerName: "Activity", width: 170 },
+    { field: "activity", headerName: "Last seen", width: 170 },
     {
       field: "delete",
       headerName: "Delete User",
@@ -152,6 +161,21 @@ const Admin = ({ userInfo }) => {
       .then((response) => console.log(response))
       .catch((error) => console.error(error));
   }
+
+  const handleContactPage = () => {
+    axios
+      .post("/updatepages", { id: 1 })
+      .then((response) => console.log(response))
+      .catch((error) => console.error(error));
+
+  }
+  const handleBetsPage = () => {
+    axios
+      .post("/updatepages", { id: 2 })
+      .then((response) => console.log(response))
+      .catch((error) => console.error(error));
+  }
+
 
   return (
     <div className="admin" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -207,6 +231,31 @@ const Admin = ({ userInfo }) => {
                 onClick={handleSuffixFeature}
                 control={<FollowingSwitch defaultChecked={features.suffixFeature} />}
                 label="Suffix Search"
+              />
+            </div>
+          </CardActions>
+        </Card>
+        <Card sx={{ width: "100%" }}>
+          <CardHeader title="Additional pages" />
+          <CardActions
+            disableSpacing
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              paddingRight: "16px",
+            }}
+          >
+            <div style={{ marginLeft: "auto" }}>
+              <FormControlLabel
+                onClick={handleContactPage}
+                control={<FollowingSwitch defaultChecked={additionalPages.contactPage} />}
+                label="Contact page"
+              />
+              <FormControlLabel
+                onClick={handleBetsPage}
+                control={<FollowingSwitch defaultChecked={additionalPages.betsPage} />}
+                label="Bets page"
               />
             </div>
           </CardActions>

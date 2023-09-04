@@ -1,12 +1,24 @@
 import GradientBtn from "./GradientBtn";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "./Logo.png";
+import axios from "axios";
 
 const Home = ({ userInfo }) => {
   const navigate = useNavigate();
+  const [additionalPages, setAdditionalPages] = useState({
+    contactPage: true,
+    betsPage: true
+  })
 
   useEffect(() => {
+    axios
+      .get("/pages")
+      .then((response) => {
+        setAdditionalPages(response.data)
+      })
+      .catch((error) => console.error(error));
+
     if (userInfo) {
       if (userInfo.email === "admin") {
         navigate("/admin");
@@ -51,11 +63,16 @@ const Home = ({ userInfo }) => {
             path={"/readme.html"}
             style={{ marginTop: "10px" }}
           />
-          <GradientBtn
+          {additionalPages.contactPage && <GradientBtn
             name={"Contact us"}
             path={"/contactus"}
             style={{ marginTop: "10px" }}
-          />
+          />}
+          {additionalPages.betsPage && <GradientBtn
+            name={"Bet of the week"}
+            path={"/betoftheweek"}
+            style={{ marginTop: "10px" }}
+          />}
         </div>
       </div>
     );

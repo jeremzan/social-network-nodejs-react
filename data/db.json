@@ -6,6 +6,10 @@
     "features": {
       "deleteFeature": true,
       "suffixFeature": true
+    },
+    "pages": {
+      "contactPage": true,
+      "betsPage": true
     }
   },
   {

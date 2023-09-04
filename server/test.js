@@ -109,16 +109,16 @@ async function runTests() {
     );
     console.log("New Post route test passed.");
 
-    const friendsTest = await testRoute(
+    const searchFriendsTest = await testRoute(
       "/friends?friendusername=test&userid=1",
       "GET"
     );
     assert.strictEqual(
-      friendsTest.status,
+      searchFriendsTest.status,
       200,
-      "Friends route should return a 200 status code"
+      "Search Friends route should return a 200 status code"
     );
-    console.log("Friends route test passed.");
+    console.log("Search Friends route test passed.");
 
     const displayFriendsTest = await testRoute("/friends/display/1", "GET");
     assert.strictEqual(
@@ -166,6 +166,24 @@ async function runTests() {
       "Update Features route should return a 200 status code"
     );
     console.log("Update Features route test passed.");
+
+    const pagesTest = await testRoute("/pages", "GET");
+    assert.strictEqual(
+      pagesTest.status,
+      200,
+      "Pages route should return a 200 status code"
+    );
+    console.log("Pages route test passed.");
+
+    const updatePagesTest = await testRoute("/updatepages", "POST", {
+      id: 1,
+    });
+    assert.strictEqual(
+      updatePagesTest.status,
+      200,
+      "Update Pages route should return a 200 status code"
+    );
+    console.log("Update Pages route test passed.");
 
     console.log("All tests passed successfully.");
   } catch (err) {

@@ -418,6 +418,43 @@ app.post("/updatefeatures", (req, res) => {
   });
 
 })
+
+app.get("/pages", (req, res) => {
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data)
+    const pages = parsedData[0].pages
+    res.json(pages);
+  });
+})
+
+app.post("/updatepages", (req, res) => {
+  const id = req.body.id
+  readFile(path, (err, data) => {
+    if (err) {
+      console.log("File read failed:", err);
+      return;
+    }
+    const parsedData = JSON.parse(data)
+    if (id === 1) {
+      parsedData[0].pages.contactPage = !parsedData[0].pages.contactPage
+    } else {
+      parsedData[0].pages.betsPage = !parsedData[0].pages.betsPage
+    }
+    writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
+      if (err) {
+        console.log("Failed to write updated data to file");
+        return;
+      }
+    });
+    res.end();
+  });
+
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
