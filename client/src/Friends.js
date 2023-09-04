@@ -112,6 +112,13 @@ const Friends = ({ userInfo }) => {
               >
                 Search
               </Button>
+              <Typography
+                variant="body2"
+                color="textSecondary"
+                sx={{ fontSize: 12, textAlign: "right", color: "gray" }}
+              >
+                {suffixFeature ? "Search by suffix" : "Search by prefix"}
+              </Typography>
             </Box>
           </Box>
         </Card>

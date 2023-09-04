@@ -35,22 +35,27 @@ const Home = ({ userInfo }) => {
           alt="Logo"
           style={{
             width: "500px",
-            maxWidth: "100%", // Ensure the logo scales down for smaller screens
+            maxWidth: "100%",
             marginBottom: "20px",
           }}
         />
         <div className="buttons" style={{ width: "100%", textAlign: "center" }}>
-          <GradientBtn name={"Login"} path={"/login"}></GradientBtn>
+          <GradientBtn name={"Login"} path={"/login"} />
           <GradientBtn
             name={"Register"}
             path={"/register"}
             style={{ marginTop: "10px" }}
-          ></GradientBtn>
+          />
           <GradientBtn
             name={"README"}
             path={"/readme.html"}
             style={{ marginTop: "10px" }}
-          ></GradientBtn>
+          />
+          <GradientBtn
+            name={"Contact us"}
+            path={"/contactus"}
+            style={{ marginTop: "10px" }}
+          />
         </div>
       </div>
     );
