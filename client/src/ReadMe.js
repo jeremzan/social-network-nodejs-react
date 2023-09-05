@@ -4,7 +4,9 @@ import React from "react";
 const ReadMe = () => {
   return (
     <div className="readme-container">
-      <Link to="/" className="back-link">{"Go back to home page"}</Link>
+      <Link to="/" className="back-link">
+        {"Go back to home page"}
+      </Link>
       <div className="readme-content">
         <h1>Social Network README</h1>
         <p>
@@ -14,15 +16,20 @@ const ReadMe = () => {
           <strong>Additional Pages Added:</strong> Contact Us, Bets of the Week
         </p>
         <p>
-          <strong>Additional Features Added:</strong> Enabling suffix search, Deleting posts
+          <strong>Additional Features Added:</strong> Enabling suffix search,
+          Deleting posts
         </p>
         <p>
-          <strong>Challenges Faced:</strong> Cookies and protected routes, Handling multiple requests
+          <strong>Challenges Faced:</strong> Cookies and protected routes,
+          Handling multiple requests
         </p>
         <p>
-          <strong>Partners Information:<br></br>
-          </strong> Jeremy Zanna (ID: 330544529)<br></br>
-          Alon Silberstein (ID: 207439753)<br></br><br></br>
+          <strong>
+            Partners Information:<br></br>
+          </strong>{" "}
+          Jeremy Zanna (ID: 330544529)<br></br>
+          Alon Silberstein (ID: 207439753)<br></br>
+          <br></br>
           Tasks: We did everything together
         </p>
         <p>
@@ -30,6 +37,7 @@ const ReadMe = () => {
         </p>
         <ul>
           <li>/admin</li>
+          <li>/admin:id</li>
           <li>/register</li>
           <li>/login</li>
           <li>/feed/:id</li>
