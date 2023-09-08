@@ -34,7 +34,16 @@ app.delete("/admin/:id", (req, res) => {
     const newUsers = parsedData.filter((user) => user.id != userId);
     newUsers.forEach((user) => {
       if (user.following) {
-        user.following = user.following.filter((followingUserId) => followingUserId != userId);
+        user.following = user.following.filter(
+          (followingUserId) => followingUserId != userId
+        );
+        if (user.posts) {
+          user.posts.forEach((post) => {
+            post.likedBy = post.likedBy.filter(
+              (likedById) => likedById != userId
+            );
+          });
+        }
       }
     });
 
@@ -184,7 +193,7 @@ app.delete("/feed/delete/:postid", (req, res) => {
     }
     const parsedData = JSON.parse(data);
 
-    parsedData.forEach(user => {
+    parsedData.forEach((user) => {
       if (user.posts) {
         user.posts = user.posts.filter((post) => post.postId != postId);
       }
@@ -259,23 +268,26 @@ app.post("/feed/newpost", (req, res) => {
 
 function searchByNamePrefix(searchTerm, newFormattedUsers, userID) {
   const lowerCaseSearchTerm = searchTerm.toLowerCase();
-  return newFormattedUsers.filter((user) =>
-    user.username.toLowerCase().startsWith(lowerCaseSearchTerm) && user.id != userID
+  return newFormattedUsers.filter(
+    (user) =>
+      user.username.toLowerCase().startsWith(lowerCaseSearchTerm) &&
+      user.id != userID
   );
 }
 
 function searchByNameSuffix(searchTerm, newFormattedUsers, userID) {
   const lowerCaseSearchTerm = searchTerm.toLowerCase();
-  return newFormattedUsers.filter((user) =>
-    user.username.toLowerCase().endsWith(lowerCaseSearchTerm) && user.id != userID
+  return newFormattedUsers.filter(
+    (user) =>
+      user.username.toLowerCase().endsWith(lowerCaseSearchTerm) &&
+      user.id != userID
   );
 }
 
 app.get("/friends", (req, res) => {
   const nameToSearch = req.query.friendusername;
   const userID = req.query.userid;
-  const suffixFeature = req.query.suffixFeature === 'true'
-
+  const suffixFeature = req.query.suffixFeature === "true";
 
   readFile(path, (err, data) => {
     if (err) {
@@ -289,22 +301,28 @@ app.get("/friends", (req, res) => {
     }));
 
     if (suffixFeature) {
-      const searchResult = searchByNameSuffix(nameToSearch, newFormattedUsers, userID);
+      const searchResult = searchByNameSuffix(
+        nameToSearch,
+        newFormattedUsers,
+        userID
+      );
       res.json(searchResult);
-    }
-    else {
-      const searchResult = searchByNamePrefix(nameToSearch, newFormattedUsers, userID);
-      console.log(searchResult)
+    } else {
+      const searchResult = searchByNamePrefix(
+        nameToSearch,
+        newFormattedUsers,
+        userID
+      );
+      console.log(searchResult);
       res.json(searchResult);
     }
     res.end();
-
   });
 });
 
 app.get("/friends/display/:id", (req, res) => {
-  const id = req.params.id
-  let followingToReturn = []
+  const id = req.params.id;
+  let followingToReturn = [];
 
   readFile(path, (err, data) => {
     if (err) {
@@ -313,19 +331,18 @@ app.get("/friends/display/:id", (req, res) => {
     }
     const parsedData = JSON.parse(data);
 
-    parsedData.forEach(user => {
+    parsedData.forEach((user) => {
       if (user.id == id) {
-        followingToReturn = user.following
+        followingToReturn = user.following;
       }
     });
     res.json(followingToReturn);
   });
-
-})
+});
 
 app.post("/friends/follow", (req, res) => {
-  const userId = req.body.userId
-  const friendId = req.body.friendId
+  const userId = req.body.userId;
+  const friendId = req.body.friendId;
 
   readFile(path, (err, data) => {
     if (err) {
@@ -352,11 +369,10 @@ app.post("/friends/follow", (req, res) => {
     });
     res.end();
   });
-
 });
 
 app.post("/logout", (req, res) => {
-  const idToUpdate = req.body.id
+  const idToUpdate = req.body.id;
 
   readFile(path, (err, data) => {
     if (err) {
@@ -381,7 +397,7 @@ app.post("/logout", (req, res) => {
     });
     res.end();
   });
-})
+});
 
 app.get("/features", (req, res) => {
   readFile(path, (err, data) => {
@@ -389,24 +405,26 @@ app.get("/features", (req, res) => {
       console.log("File read failed:", err);
       return;
     }
-    const parsedData = JSON.parse(data)
-    const features = parsedData[0].features
+    const parsedData = JSON.parse(data);
+    const features = parsedData[0].features;
     res.json(features);
   });
-})
+});
 
 app.post("/updatefeatures", (req, res) => {
-  const id = req.body.id
+  const id = req.body.id;
   readFile(path, (err, data) => {
     if (err) {
       console.log("File read failed:", err);
       return;
     }
-    const parsedData = JSON.parse(data)
+    const parsedData = JSON.parse(data);
     if (id === 1) {
-      parsedData[0].features.deleteFeature = !parsedData[0].features.deleteFeature
+      parsedData[0].features.deleteFeature =
+        !parsedData[0].features.deleteFeature;
     } else {
-      parsedData[0].features.suffixFeature = !parsedData[0].features.suffixFeature
+      parsedData[0].features.suffixFeature =
+        !parsedData[0].features.suffixFeature;
     }
     writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
       if (err) {
@@ -416,8 +434,7 @@ app.post("/updatefeatures", (req, res) => {
     });
     res.end();
   });
-
-})
+});
 
 app.get("/pages", (req, res) => {
   readFile(path, (err, data) => {
@@ -425,24 +442,24 @@ app.get("/pages", (req, res) => {
       console.log("File read failed:", err);
       return;
     }
-    const parsedData = JSON.parse(data)
-    const pages = parsedData[0].pages
+    const parsedData = JSON.parse(data);
+    const pages = parsedData[0].pages;
     res.json(pages);
   });
-})
+});
 
 app.post("/updatepages", (req, res) => {
-  const id = req.body.id
+  const id = req.body.id;
   readFile(path, (err, data) => {
     if (err) {
       console.log("File read failed:", err);
       return;
     }
-    const parsedData = JSON.parse(data)
+    const parsedData = JSON.parse(data);
     if (id === 1) {
-      parsedData[0].pages.contactPage = !parsedData[0].pages.contactPage
+      parsedData[0].pages.contactPage = !parsedData[0].pages.contactPage;
     } else {
-      parsedData[0].pages.betsPage = !parsedData[0].pages.betsPage
+      parsedData[0].pages.betsPage = !parsedData[0].pages.betsPage;
     }
     writeFile(path, JSON.stringify(parsedData, null, 2), (err) => {
       if (err) {
@@ -452,8 +469,7 @@ app.post("/updatepages", (req, res) => {
     });
     res.end();
   });
-
-})
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
