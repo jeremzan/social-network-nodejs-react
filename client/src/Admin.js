@@ -78,7 +78,8 @@ const Admin = ({ userInfo }) => {
     }
 
 
-    axios
+    setTimeout(() => {
+      axios
       .get("/admin")
       .then((response) => {
         setUsers(response.data);
@@ -109,6 +110,7 @@ const Admin = ({ userInfo }) => {
         setAdditionalPages(response.data)
       })
       .catch((error) => console.error(error));
+    }, 300);
 
   }, [userInfo, navigate]);
 

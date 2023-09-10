@@ -8,10 +8,11 @@ const LogOutButton = ({ userID }) => {
       axios
         .post("/logout", { id: userID })
         .then((response) => {
-          console.log(response);
-          window.location.reload();})
+          console.log(response)
+          ;})
         .catch((error) => console.error(error));
-    }, 200);
+        window.location.reload()
+    }, 300);
     
   };
 
