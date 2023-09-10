@@ -76,8 +76,8 @@ async function runTests() {
     console.log("Feed route test passed.");
 
     const likePostTest = await testRoute("/feed/liked", "POST", {
-      userId: 1,
-      postId: 1,
+      userId: 2,
+      postId: 3,
     });
     assert.strictEqual(
       likePostTest.status,
@@ -86,7 +86,7 @@ async function runTests() {
     );
     console.log("Like Post route test passed.");
 
-    const deletePostTest = await testRoute("/feed/delete/1", "DELETE");
+    const deletePostTest = await testRoute("/feed/delete/4", "DELETE");
     assert.strictEqual(
       deletePostTest.status,
       200,
@@ -95,7 +95,7 @@ async function runTests() {
     console.log("Delete Post route test passed.");
 
     const newPostTest = await testRoute("/feed/newpost", "POST", {
-      userId: 1,
+      userId: 3,
       userName: "Test User",
       title: "New Post Title",
       insertionTime: Date.now(),
@@ -109,7 +109,7 @@ async function runTests() {
     console.log("New Post route test passed.");
 
     const searchFriendsTest = await testRoute(
-      "/friends?friendusername=test&userid=1",
+      "/friends?friendusername=new&userid=2",
       "GET"
     );
     assert.strictEqual(
@@ -119,7 +119,7 @@ async function runTests() {
     );
     console.log("Search Friends route test passed.");
 
-    const displayFriendsTest = await testRoute("/friends/display/1", "GET");
+    const displayFriendsTest = await testRoute("/friends/display/2", "GET");
     assert.strictEqual(
       displayFriendsTest.status,
       200,
@@ -128,8 +128,8 @@ async function runTests() {
     console.log("Display Friends route test passed.");
 
     const followFriendTest = await testRoute("/friends/follow", "POST", {
-      userId: 1,
-      friendId: 2,
+      userId: 2,
+      friendId: 3,
     });
     assert.strictEqual(
       followFriendTest.status,
@@ -139,7 +139,7 @@ async function runTests() {
     console.log("Follow Friend route test passed.");
 
     const logoutTest = await testRoute("/logout", "POST", {
-      id: 1,
+      id: 2,
     });
     assert.strictEqual(
       logoutTest.status,
