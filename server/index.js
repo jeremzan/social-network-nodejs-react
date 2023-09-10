@@ -141,7 +141,7 @@ app.get("/feed/:id", (req, res) => {
       }
     });
     posts.sort(function (a, b) {
-      return a.insertionTime - b.insertionTime;
+      return (new Date(a.insertionTime).getTime()) - (new Date(b.insertionTime).getTime());
     });
     posts.reverse();
     res.json({ posts: posts });

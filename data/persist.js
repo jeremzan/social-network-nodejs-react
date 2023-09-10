@@ -5,7 +5,7 @@
     "password": "admin",
     "features": {
       "deleteFeature": true,
-      "suffixFeature": true
+      "suffixFeature": false
     },
     "pages": {
       "contactPage": true,
@@ -36,13 +36,22 @@
         "likedBy": [],
         "insertionTime": "2023-08-28T12:05:28.862Z",
         "content": "My second post\n"
+      },
+      {
+        "userId": 1,
+        "postId": 5,
+        "userName": "Jeremy Zanna",
+        "title": "My last post",
+        "likedBy": [],
+        "insertionTime": "2023-09-10T09:15:05.927Z",
+        "content": "This the test for my last post, here goes nothing !\n"
       }
     ],
     "following": [
       2,
       3
     ],
-    "lastLogOut": "2023-08-28T12:05:32.437Z"
+    "lastLogOut": "2023-09-10T09:21:50.515Z"
   },
   {
     "id": 2,

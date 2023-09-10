@@ -7,10 +7,12 @@ const LogOutButton = ({ userID }) => {
     setTimeout(() => {
       axios
         .post("/logout", { id: userID })
-        .then((response) => console.log(response))
+        .then((response) => {
+          console.log(response);
+          window.location.reload();})
         .catch((error) => console.error(error));
     }, 200);
-    window.location.reload();
+    
   };
 
   return (
