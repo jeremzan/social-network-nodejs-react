@@ -27,8 +27,3 @@ const Dashboard = ({ userInfo }) => {
 };
 
 export default Dashboard;
-
-// return <Link to="/login">{"Go back to Login Cabron !"} </Link>;
-// } else if (userInfo.email !== "admin") {
-//   navigate("/dashboard"); // When wnating to access /dahboard/friends redirect to dashboard/feed
-// }
